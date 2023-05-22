@@ -1,6 +1,7 @@
 import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
-const backend_api = process.env.NEXT_PUBLIC_BACKEND_URL
+const conversations_api = process.env.NEXT_PUBLIC_BACKEND_URL
+const api_key = process.env.NEXT_PUBLIC_API_KEY
 
 export async function getApiResponse(prompt) {
 
@@ -11,7 +12,8 @@ export async function getApiResponse(prompt) {
         "user_message": prompt,
         "document": 0,
         "conversation_id": 0,
-        "user_id": 0
+        "user_id": 0,
+        "api_key": api_key
     });
 
     const requestOptions = {
@@ -21,13 +23,11 @@ export async function getApiResponse(prompt) {
         redirect: 'follow',
     };
 
-    const api_url = `${backend_api}/conv/get_response`
+    const api_url = `${conversations_api}/conv/get_response`
 
     try{
         const response = await fetch(api_url, requestOptions)
-        const result = await response.json()
-        // console.log(result)
-        return result
+        return await response.json()
     }catch (error){
         console.log(error)
         return error

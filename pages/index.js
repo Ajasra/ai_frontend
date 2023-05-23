@@ -17,6 +17,7 @@ import { ColorThemeSwitch } from "../components/UI/Buttons/ColorThemeSwitch";
 import AppHeader from "../components/UI/Layout/Header";
 import AppNavbar from "../components/UI/Layout/Navbar";
 import {AppFooter} from "../components/UI/Layout/Footer";
+import {Content} from "../components/UI/Layout/Content";
 
 export default function Home() {
   return (
@@ -48,7 +49,7 @@ export default function Home() {
           },
         })}
       >
-        <Main />
+        <Content />
       </AppShell>
     </>
   );

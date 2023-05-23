@@ -1,10 +1,11 @@
-import { Container, Input, PasswordInput, Button } from "@mantine/core";
+import { Container, Input, PasswordInput, Button, Title } from "@mantine/core";
 import { LockClosedIcon, PersonIcon } from "@radix-ui/react-icons";
 
 import { useContext, useState } from "react";
 import { UserDispatchContext } from "../../../../User/UserContext";
 
 import styles from "../../../../../styles/LoginForm.module.css";
+import { loginUser } from "../../../../../utils/API/user_api";
 
 export default function LoginForm(props) {
   const [name, setName] = useState("");
@@ -13,7 +14,15 @@ export default function LoginForm(props) {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  const userDetails = useContext(UserDispatchContext);
   const setUserDetails = useContext(UserDispatchContext);
+
+  function Register() {
+    setUserDetails({
+      ...userDetails,
+      action: "register",
+    });
+  }
 
   async function Login() {
     let continueLogin = true;
@@ -33,10 +42,20 @@ export default function LoginForm(props) {
     }
 
     if (continueLogin) {
-      setUserDetails({
-        userId: 1,
-        username: "test",
-      });
+      const json = await loginUser(name, password);
+      if (json["code"] == "200") {
+        setUserDetails({
+          ...userDetails,
+          action: null,
+          user_id: json["data"]["user_id"],
+          user_name: json["data"]["name"],
+          hash: json["data"]["password"],
+          email: json["data"]["email"],
+        });
+        // setResponse(json['response']['message'])
+      } else {
+        setNameError("Invalid username or password");
+      }
     } else {
       console.log("login failed");
     }
@@ -44,6 +63,7 @@ export default function LoginForm(props) {
 
   return (
     <Container className={styles.LoginForm}>
+      <Title order={2}>Login</Title>
       <Input.Wrapper id="login" withAsterisk label="Username" error={nameError}>
         <Input
           id="login"
@@ -66,8 +86,12 @@ export default function LoginForm(props) {
         }}
       />
       <br />
-      <Button onClick={Login} mr={20}>Login</Button>
-      <Button mr={20}>Register</Button>
+      <Button onClick={Login} mr={20}>
+        Login
+      </Button>
+      <Button onClick={Register} mr={20} variant="outline">
+        Register
+      </Button>
       {/*<Button variant="outline">Forgot password?</Button>*/}
     </Container>
   );

@@ -5,8 +5,6 @@ export function ColorThemeSwitch() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme("dark");
   const dark = colorScheme === "dark";
 
-  console.log(colorScheme);
-
   return (
     <ActionIcon
       variant="outline"

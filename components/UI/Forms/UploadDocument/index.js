@@ -40,7 +40,7 @@ export function UploadDocument() {
       let formData = new FormData();
       formData.append("file", file, file.name);
       formData.append("user_id", userDetails.user_id);
-      formData.append("force", true);
+      formData.append("force", false);
 
       const json = await uploadDocumentApi(formData);
       console.log(json);
@@ -48,15 +48,18 @@ export function UploadDocument() {
         setUploading(false);
         setFile(null);
       } else {
-        setFileError("Upload failed");
+        if (json["result"]["message"] != null) {
+          setFileError(json["result"]["message"]);
+        } else {
+          setFileError("Upload failed");
+        }
         setUploading(false);
       }
     }
   }
 
   return (
-    <Group>
-      <Title order={3}>Upload Document</Title>
+    <Container>
       <FileInput
         placeholder="Pick file"
         label="Document to upload"
@@ -67,9 +70,9 @@ export function UploadDocument() {
         accept=".pdf, .doc, .docx, .txt, .epub"
         error={fileError}
       />
-      <Button onClick={Upload} disabled={uploading}>
+      <Button onClick={Upload} disabled={uploading} mt={16}>
         Upload
       </Button>
-    </Group>
+    </Container>
   );
 }

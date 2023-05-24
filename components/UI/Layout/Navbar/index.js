@@ -1,25 +1,65 @@
-import { Navbar, Text } from "@mantine/core";
+import { Accordion, Divider, Navbar, rem, Text } from "@mantine/core";
 
 import styles from "../../../../styles/Navbar.module.css";
 import UserInfo from "../../UserInfo";
 import { useContext } from "react";
 import { UserContext } from "../../../User/UserContext";
 import { UploadDocument } from "../../Forms/UploadDocument";
+import DocumentList from "../../Documents/DocumentList";
+import { IconFolder, IconMessageChatbot, IconUser } from "@tabler/icons-react";
+import { ChatBubbleIcon } from "@radix-ui/react-icons";
+import ConversationsList from "../../Conversations/ConversationsList";
 
 export default function AppNavbar() {
   const userDetails = useContext(UserContext);
 
   return (
     <Navbar
-      width={{ sm: 300, lg: 300, base: 100 }}
+      width={{ sm: 300, lg: 400, base: 100 }}
       p="xs"
       className={styles.Navbar}
     >
       <Navbar.Section grow>
-        {userDetails.user_id && <UploadDocument />}
-      </Navbar.Section>
-      <Navbar.Section>
-        <UserInfo />
+        <Accordion
+          variant="separated"
+          chevronPosition="left"
+          disableChevronRotation
+          defaultValue="conversations"
+        >
+          {userDetails?.user_id && (
+            <>
+              <Accordion.Item value="documents">
+                <Accordion.Control icon={<IconFolder size={rem(20)} />}>
+                  Documents
+                </Accordion.Control>
+                <Accordion.Panel>
+                  <Divider variant="solid" />
+                  <UploadDocument />
+                  <Divider variant="solid" m={16} />
+                  <DocumentList />
+                </Accordion.Panel>
+              </Accordion.Item>
+              <Accordion.Item value="conversations">
+                <Accordion.Control icon={<ChatBubbleIcon size={rem(20)} />}>
+                  Conversations
+                </Accordion.Control>
+                <Accordion.Panel>
+                  <Divider variant="solid" />
+                  <ConversationsList />
+                </Accordion.Panel>
+              </Accordion.Item>
+              <Accordion.Item value="user">
+                <Accordion.Control icon={<IconUser size={rem(20)} />}>
+                  User
+                </Accordion.Control>
+                <Accordion.Panel>
+                  <Divider variant="solid" />
+                  <UserInfo />
+                </Accordion.Panel>
+              </Accordion.Item>
+            </>
+          )}
+        </Accordion>
       </Navbar.Section>
     </Navbar>
   );

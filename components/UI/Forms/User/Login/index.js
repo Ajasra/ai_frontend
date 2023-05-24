@@ -43,6 +43,7 @@ export default function LoginForm(props) {
 
     if (continueLogin) {
       const json = await loginUser(name, password);
+        console.log(json);
       if (json["code"] == "200") {
         setUserDetails({
           ...userDetails,

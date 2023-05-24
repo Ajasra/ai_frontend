@@ -8,8 +8,8 @@ export function SignUpPage() {
 
   return (
     <>
-      {userDetails.action == null && <LoginForm />}
-      {userDetails.action === "register" && <RegisterForm />}
+      {userDetails?.action == null && <LoginForm />}
+      {userDetails?.action === "register" && <RegisterForm />}
     </>
   );
 }

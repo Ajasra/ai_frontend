@@ -12,18 +12,24 @@ export function ConversationHistory() {
 
   const [history, setHistory] = useState([]);
   const [conv_id, setConv_id] = useState(null);
+  const [processing, setProcessing] = useState(false);
 
   function addResponse(question, response, error = false) {
-    setHistory([
-      ...history,
-      {
-        question: question,
-        answer: response["data"]["response"],
-        error: error,
-        source: response["data"]["source"],
-        followup: response["data"]["follow_up_questions"],
-      },
-    ]);
+    console.log(response);
+    try {
+      setHistory([
+        ...history,
+        {
+          question: question,
+          answer: response["data"]["response"],
+          error: error,
+          source: response["data"]["source"],
+          followup: response["data"]["follow_up_questions"],
+        },
+      ]);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async function getHistory(conv_id) {
@@ -35,6 +41,7 @@ export function ConversationHistory() {
         hist.push({
           question: item["prompt"],
           answer: item["answer"],
+
           error: false,
           source: [],
           followup: [],
@@ -55,18 +62,35 @@ export function ConversationHistory() {
     if (userDetails?.conversation != null) {
       setConv_id(userDetails.conversation);
       getHistory(userDetails.conversation);
+    } else {
+      setConv_id(null);
+      setHistory([]);
+      setUserDetails({
+        ...userDetails,
+        conversation: null,
+      });
     }
   }, [userDetails?.conversation]);
 
   return (
     <Container>
-      <ShowHistory history={history} />
+      <ShowHistory
+        history={history}
+        user_id={userDetails.user_id}
+        document_id={userDetails.document}
+        conv_id={conv_id}
+        addResponse={addResponse}
+        processing={processing}
+        setProcessing={setProcessing}
+      />
       <RequestForm
         user_id={userDetails.user_id}
         document_id={userDetails.document}
         conv_id={conv_id}
         setConversationId={updateConversation}
         addResponse={addResponse}
+        processing={processing}
+        setProcessing={setProcessing}
       />
     </Container>
   );

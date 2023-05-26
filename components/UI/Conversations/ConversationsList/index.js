@@ -45,6 +45,16 @@ export default function ConversationsList() {
   }, [userDetails.user_id]);
 
   useEffect(() => {
+    if (userDetails.action == "updateConversation") {
+      parseConversations();
+      setUserDetails({
+        ...userDetails,
+        action: null,
+      });
+    }
+  }, [userDetails.action]);
+
+  useEffect(() => {
     setUserDetails({
       ...userDetails,
       conversation: conversation,

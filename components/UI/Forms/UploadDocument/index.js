@@ -40,7 +40,7 @@ export function UploadDocument() {
       let formData = new FormData();
       formData.append("file", file, file.name);
       formData.append("user_id", userDetails.user_id);
-      formData.append("force", false);
+      formData.append("force", true);
 
       const json = await uploadDocumentApi(formData);
       console.log(json);

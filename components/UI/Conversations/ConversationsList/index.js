@@ -1,7 +1,8 @@
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { useContext, useEffect, useState } from "react";
-import { getConversationsListApi } from "../../../../utils/API/conv_api";
-import { Button } from "@mantine/core";
+import { Button, Tooltip } from "@mantine/core";
+import { getConversationsListApi } from "../../../../utils/API/conversarion_api";
+import { IconLayoutGridAdd } from "@tabler/icons-react";
 
 export default function ConversationsList() {
   const userDetails = useContext(UserContext);
@@ -28,6 +29,23 @@ export default function ConversationsList() {
         }
       }
     }
+  }
+
+  async function createNewConversation() {
+    // TODO: create new conversation
+    if(userDetails.user_id != null){
+      let cur_doc = 0;
+      if(userDetails.document != null){
+        cur_doc = userDetails.document;
+      }else{
+        // TODO: do not allow create conversation without document
+        // alert('Select a document to create a conversation')
+        // console.log('Select a document to create a conversation')
+      }
+      console.log(cur_doc)
+    }
+    
+    
   }
 
   function getDocumentId() {
@@ -63,20 +81,25 @@ export default function ConversationsList() {
   }, [conversation]);
 
   return (
-    <div>
-      {userConversations.length > 0 &&
-        userConversations.map((conv) => (
-          <Button
-            variant={conversation == conv.id ? "filled" : "subtle"}
-            key={conv.id}
-            w="100%"
-            onClick={() => {
-              setConversation(conv.id);
-            }}
-          >
-            {conv.title}
-          </Button>
-        ))}
-    </div>
+    <>
+      <div>
+        {userConversations.length > 0 &&
+          userConversations.map((conv) => (
+            <Button
+              variant={conversation == conv.id ? "filled" : "subtle"}
+              key={conv.id}
+              w="100%"
+              onClick={() => {
+                setConversation(conv.id);
+              }}
+            >
+              {conv.title}
+            </Button>
+          ))}
+      </div>
+      {/*<Button onClick={createNewConversation} variant="unstyled">*/}
+      {/*  <IconLayoutGridAdd size={24} />*/}
+      {/*</Button>*/}
+    </>
   );
 }

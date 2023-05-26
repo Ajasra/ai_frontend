@@ -31,8 +31,6 @@ export function UploadDocument() {
       setFileError("");
     }
 
-    console.log(file);
-
     if (continueUpload) {
       setUploading(true);
 
@@ -43,7 +41,6 @@ export function UploadDocument() {
       formData.append("force", true);
 
       const json = await uploadDocumentApi(formData);
-      console.log(json);
       if (json["code"] == "200") {
         setUploading(false);
         setFile(null);

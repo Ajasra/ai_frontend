@@ -8,6 +8,7 @@ import {
   Divider,
 } from "@mantine/core";
 import { getApiResponse } from "../../../../utils/API/conversarion_api";
+import {getRandomInt, getRandomIntSeed} from "../../../../utils/functions";
 
 export function ShowHistory(props) {
   const {
@@ -19,8 +20,6 @@ export function ShowHistory(props) {
     processing,
     setProcessing,
   } = props;
-
-  console.log(history);
 
   async function request(question) {
     let continueRequest = true;
@@ -44,10 +43,10 @@ export function ShowHistory(props) {
 
   return (
     <>
-      {history?.map((item, index) => (
+      {history?.map((item, hist_ind) => (
         <>
           {" "}
-          <Container key={"hist_" + index} mt={32}>
+          <Container key={"hist_" +  + getRandomIntSeed(10000, hist_ind)} mt={32}>
             <Title order={3} color="blue.6">
               {item.question}
             </Title>
@@ -57,10 +56,10 @@ export function ShowHistory(props) {
                 <Title order={5} mt={16}>
                   Follow up questions:
                 </Title>
-                {item.followup.map((followup, index) => (
+                {item.followup.map((followup, followIndex) => (
                   <Text
                     mt={8}
-                    key={"followup_" + index}
+                    key={"followup_" +  getRandomIntSeed(10000, followIndex) + "_" + hist_ind}
                     onClick={() => {
                       request(followup);
                     }}
@@ -82,7 +81,7 @@ export function ShowHistory(props) {
                   {item.source?.map((source, index) => (
                     <>
                       <Accordion.Item
-                        key={index}
+                        key={"source_" + getRandomIntSeed(10000, index) + "_" + hist_ind}
                         value={`${source.metadata.source}_${index}`}
                       >
                         <Accordion.Control>
@@ -102,7 +101,7 @@ export function ShowHistory(props) {
               </Container>
             )}
           </Container>
-          <Divider mt={16}/>
+          <Divider mt={16} />
         </>
       ))}
     </>

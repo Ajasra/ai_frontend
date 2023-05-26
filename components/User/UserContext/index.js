@@ -1,5 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 
+// TODO: check where it reset user at the beginning
+
 const UserContext = createContext(undefined);
 const UserDispatchContext = createContext(undefined);
 
@@ -8,6 +10,7 @@ function UserProvider({ children }) {
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
+    console.log(loggedInUser);
     if (loggedInUser) {
       setUser(JSON.parse(loggedInUser));
     }else{
@@ -26,10 +29,10 @@ function UserProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (user != null) {
+    if (user?.user_id != null) {
       localStorage.setItem("user", JSON.stringify(user));
     } else {
-      localStorage.removeItem("user");
+      // localStorage.removeItem("user");
     }
   }, [user]);
 

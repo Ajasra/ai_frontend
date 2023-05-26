@@ -76,11 +76,13 @@ export default function DocumentList() {
       setUserDetails({
         ...userDetails,
         document: document,
+        conversation: null,
       });
     } else {
       setUserDetails({
         ...userDetails,
         document: null,
+        conversation: null,
       });
     }
   }, [document]);

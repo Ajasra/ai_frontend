@@ -16,19 +16,19 @@ import { useState } from "react";
 import { ColorThemeSwitch } from "../components/UI/Buttons/ColorThemeSwitch";
 import AppHeader from "../components/UI/Layout/Header";
 import AppNavbar from "../components/UI/Layout/Navbar";
-import {AppFooter} from "../components/UI/Layout/Footer";
-import {Content} from "../components/UI/Layout/Content";
+import { AppFooter } from "../components/UI/Layout/Footer";
+import { Content } from "../components/UI/Layout/Content";
 
 export default function Home() {
+  const [menuOpened, setMenuOpened] = useState(false);
+
   return (
     <>
       <AppShell
         padding="md"
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"
-        navbar={
-          <AppNavbar />
-        }
+        navbar={<AppNavbar opened={menuOpened} setOpened={setMenuOpened} />}
         // aside={
         //   <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
         //     <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
@@ -36,10 +36,8 @@ export default function Home() {
         //     </Aside>
         //   </MediaQuery>
         // }
-        footer={
-          <AppFooter />
-        }
-        header={<AppHeader />}
+        footer={<AppFooter />}
+        header={<AppHeader opened={menuOpened} setOpened={setMenuOpened} />}
         styles={(theme) => ({
           main: {
             backgroundColor:

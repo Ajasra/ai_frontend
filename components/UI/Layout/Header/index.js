@@ -7,16 +7,18 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { ColorThemeSwitch } from "../../Buttons/ColorThemeSwitch";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import styles from "../../../../styles/Header.module.css";
+import { UserContext } from "../../../User/UserContext";
 
-export default function AppHeader() {
-  const [opened, setOpened] = useState(false);
+export default function AppHeader(props) {
+  const { opened, setOpened } = props;
+
   const theme = useMantineTheme();
 
   return (
-    <Header height={{ base: 50, md: 70 }} p="md">
+    <Header height={{ base: 70, md: 70 }} p="md">
       <Group position="apart" className={styles.Main}>
         <MediaQuery largerThan="sm" styles={{ display: "none" }}>
           <Burger

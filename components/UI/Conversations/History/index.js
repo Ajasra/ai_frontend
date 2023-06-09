@@ -1,14 +1,6 @@
-import {
-  Container,
-  Title,
-  Text,
-  Flex,
-  Accordion,
-  Button,
-  Divider,
-} from "@mantine/core";
+import { Container, Title, Text, Accordion, Divider } from "@mantine/core";
 import { getApiResponse } from "../../../../utils/API/conversarion_api";
-import {getRandomInt, getRandomIntSeed} from "../../../../utils/functions";
+import { getRandomIntSeed } from "../../../../utils/functions";
 
 export function ShowHistory(props) {
   const {
@@ -46,7 +38,7 @@ export function ShowHistory(props) {
       {history?.map((item, hist_ind) => (
         <>
           {" "}
-          <Container key={"hist_" +  + getRandomIntSeed(10000, hist_ind)} mt={32}>
+          <Container key={"hist_" + +getRandomIntSeed(10000, hist_ind)} mt={32}>
             <Title order={3} color="blue.6">
               {item.question}
             </Title>
@@ -59,7 +51,12 @@ export function ShowHistory(props) {
                 {item.followup.map((followup, followIndex) => (
                   <Text
                     mt={8}
-                    key={"followup_" +  getRandomIntSeed(10000, followIndex) + "_" + hist_ind}
+                    key={
+                      "followup_" +
+                      getRandomIntSeed(10000, followIndex) +
+                      "_" +
+                      hist_ind
+                    }
                     onClick={() => {
                       request(followup);
                     }}
@@ -81,7 +78,12 @@ export function ShowHistory(props) {
                   {item.source?.map((source, index) => (
                     <>
                       <Accordion.Item
-                        key={"source_" + getRandomIntSeed(10000, index) + "_" + hist_ind}
+                        key={
+                          "source_" +
+                          getRandomIntSeed(10000, index) +
+                          "_" +
+                          hist_ind
+                        }
                         value={`${source.metadata.source}_${index}`}
                       >
                         <Accordion.Control>

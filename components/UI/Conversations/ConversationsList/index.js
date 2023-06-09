@@ -65,10 +65,14 @@ export default function ConversationsList() {
   useEffect(() => {
     if (userDetails.action == "updateConversation") {
       parseConversations();
+
       setUserDetails({
         ...userDetails,
         action: null,
       });
+    }
+    if (userDetails.action == "closeConversation") {
+      setConversation(null);
     }
   }, [userDetails.action]);
 

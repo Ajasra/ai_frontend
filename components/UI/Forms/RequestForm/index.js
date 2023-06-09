@@ -57,13 +57,14 @@ export default function RequestForm(props) {
         addResponse(question, json["response"]);
         // setConversationId(json["response"]["data"]["conversation_id"]);
         setQuestion("");
-        setUserDetails({
-          ...userDetails,
-          action: "updateConversation",
-        });
+        // setUserDetails({
+        //   ...userDetails,
+        //   action: "updateConversation",
+        // });
       } else if (json["response"]["status"] == "error") {
         addResponse(question, json["response"]["message"], true);
       }
+      window.scrollTo(0, document.body.scrollHeight, { behavior: "smooth" });
       setProcessing(false);
     }
   }

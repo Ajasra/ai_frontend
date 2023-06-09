@@ -18,13 +18,17 @@ export function ConversationHistory(props) {
 
   function addResponse(question, response, error = false) {
     try {
+
+      let sources = response["data"]["source"];
+      // TODO: clean dublicatees for sources
+
       setHistory([
         ...history,
         {
           question: question,
           answer: response["data"]["response"],
           error: error,
-          source: response["data"]["source"],
+          source: sources,
           followup: response["data"]["follow_up_questions"],
         },
       ]);
@@ -38,7 +42,10 @@ export function ConversationHistory(props) {
     const json = await getConversationHistory(conv_id);
     if (json["code"] == "200") {
       let hist = [];
-      json["response"]?.map((item) => {
+      // reverse the order of the history
+      const resp = json["response"].reverse();
+
+      resp?.map((item) => {
         hist.push({
           question: item["prompt"],
           answer: item["answer"],

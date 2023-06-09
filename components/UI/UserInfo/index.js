@@ -24,6 +24,7 @@ export default function UserInfo({ props }) {
       user_email: null,
       action: null,
     });
+    localStorage.removeItem("user");
   }
 
   return (

@@ -34,10 +34,12 @@ export async function registerUser(email, name, password) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
+  console.log(email, name, password);
+
   const raw = JSON.stringify({
     email: email,
-    password: password,
     name: name,
+    password: password,
   });
 
   const requestOptions = {

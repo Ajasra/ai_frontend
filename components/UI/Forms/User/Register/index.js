@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Container, Input, PasswordInput, Title } from "@mantine/core";
 import { LockClosedIcon, PersonIcon } from "@radix-ui/react-icons";
 import { UserDispatchContext } from "../../../../User/UserContext";
@@ -23,6 +23,8 @@ export function RegisterForm() {
   const setUserDetails = useContext(UserDispatchContext);
   const userDetails = useContext(UserDispatchContext);
 
+  const [proceed, setProceed] = useState(false);
+
   function Login() {
     setUserDetails({
       ...userDetails,
@@ -30,54 +32,71 @@ export function RegisterForm() {
     });
   }
 
-  async function Register() {
-    let continueLogin = true;
+  function UpdateName(newName) {
     if (name.length < 3) {
       setNameError("Name must be at least 3 characters");
-      continueLogin = false;
     } else {
       setNameError("");
     }
+    setName(newName);
+  }
 
-    if (password.length < 6) {
-      setPasswordError("Password must be at least 6 characters");
-      continueLogin = false;
-    } else {
-      setPasswordError("");
-    }
-
-    if (passwordConfirm !== password) {
-      setPasswordConfirmError("Passwords must match");
-      continueLogin = false;
-    } else {
-      setPasswordConfirmError("");
-    }
-
-    // check if the email is valid and have @ symbol, have domain name and have a valid domain name
+  function UpdateEmail(newEmail) {
     if (email.length < 3) {
       setEmailError("Email must be at least 3 characters");
-      continueLogin = false;
     } else if (!email.includes("@")) {
       setEmailError("Email must have @ symbol");
-      continueLogin = false;
     } else if (!email.includes(".")) {
       setEmailError("Email must have a domain name");
-      continueLogin = false;
     } else {
       setEmailError("");
     }
+    setEmail(newEmail);
+  }
 
-    if (continueLogin) {
+  function UpdatePassword(newPassword) {
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+    } else {
+      setPasswordError("");
+    }
+    setPassword(newPassword);
+  }
+
+  function UpdatePasswordConfirm(passwordConfirm) {
+    if (passwordConfirm != password) {
+      setPasswordConfirmError("Passwords must match");
+    } else {
+      setPasswordConfirmError("");
+    }
+    setPasswordConfirm(passwordConfirm);
+  }
+
+  useEffect(() => {
+
+      console.log(!nameError)
+    if (
+      !nameError && !emailError && !passwordError && !passwordConfirmError && name && email && password && passwordConfirm
+    ) {
+      setProceed(true);
+    } else {
+      setProceed(false);
+    }
+  }, [nameError, emailError, passwordError, passwordConfirmError]);
+
+  async function Register() {
+    if (proceed) {
       console.log("registering");
       registerUser(email, name, password).then((json) => {
         console.log(json);
         if (json["code"] == "200") {
           setUserDetails({
             ...userDetails,
+            user_email: email,
             action: null,
           });
         } else {
-          setNameError("Invalid username or password");
+          setEmailError(json['response']);
         }
       });
     } else {
@@ -94,7 +113,7 @@ export function RegisterForm() {
           icon={<PersonIcon />}
           placeholder="Your name"
           onChange={(val) => {
-            setName(val.currentTarget.value);
+            UpdateName(val.currentTarget.value);
           }}
         />
       </Input.Wrapper>
@@ -105,7 +124,7 @@ export function RegisterForm() {
           icon={<IconMail />}
           placeholder="Your email"
           onChange={(val) => {
-            setEmail(val.currentTarget.value);
+            UpdateEmail(val.currentTarget.value);
           }}
         />
       </Input.Wrapper>
@@ -117,7 +136,7 @@ export function RegisterForm() {
         icon={<LockClosedIcon />}
         error={passwordError}
         onChange={(val) => {
-          setPassword(val.currentTarget.value);
+          UpdatePassword(val.currentTarget.value);
         }}
       />
       <br />
@@ -128,11 +147,11 @@ export function RegisterForm() {
         icon={<LockClosedIcon />}
         error={passwordConfirmError}
         onChange={(val) => {
-          setPasswordConfirm(val.currentTarget.value);
+          UpdatePasswordConfirm(val.currentTarget.value);
         }}
       />
       <br />
-      <Button onClick={Register} mr={20}>
+      <Button onClick={Register} mr={20} disabled={!proceed}>
         Register
       </Button>
       <Button onClick={Login} mr={20} variant="outline">

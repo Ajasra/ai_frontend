@@ -30,7 +30,7 @@ export async function loginUser(email, password) {
   }
 }
 
-export async function registerUser(email, password, name) {
+export async function registerUser(email, name, password) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 

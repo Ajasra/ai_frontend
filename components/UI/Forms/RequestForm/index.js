@@ -1,6 +1,9 @@
 import { Button, Container, Input, Text, Title } from "@mantine/core";
 import { useContext, useState } from "react";
-import { getApiResponse } from "../../../../utils/API/conversarion_api";
+import {
+  createConversationApi,
+  getApiResponse,
+} from "../../../../utils/API/conversarion_api";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 
 export default function RequestForm(props) {
@@ -10,11 +13,11 @@ export default function RequestForm(props) {
   const {
     user_id,
     document_id,
-    conv_id,
-    setConversationId,
     addResponse,
     processing,
     setProcessing,
+    conversation,
+    setConv,
   } = props;
 
   const [question, setQuestion] = useState("");
@@ -32,6 +35,17 @@ export default function RequestForm(props) {
     }
 
     if (continueRequest) {
+      let conv_id = conversation?.id;
+      if (conversation?.id == null || conversation == null) {
+        const conv = await createConversationApi(
+          user_id,
+          document_id,
+          conversation.title
+        );
+        setConv(conv["response"]);
+        conv_id = conv["response"];
+      }
+
       setProcessing(true);
       const json = await getApiResponse(
         question,
@@ -41,12 +55,11 @@ export default function RequestForm(props) {
       );
       if (json["response"]["status"] == "success") {
         addResponse(question, json["response"]);
-        setConversationId(json["response"]["data"]["conversation_id"]);
+        // setConversationId(json["response"]["data"]["conversation_id"]);
         setQuestion("");
         setUserDetails({
           ...userDetails,
           action: "updateConversation",
-          conversation: json["response"]["data"]["conversation_id"],
         });
       } else if (json["response"]["status"] == "error") {
         addResponse(question, json["response"]["message"], true);

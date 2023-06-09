@@ -6,15 +6,6 @@ import {
   updateConversationAPI,
 } from "../../../../utils/API/conversarion_api";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
-import {
-  IconAdjustmentsCancel,
-  IconBellCancel,
-  IconCheck,
-  IconCross,
-  IconEdit,
-  IconHttpDelete,
-  IconMessage2Cancel,
-} from "@tabler/icons-react";
 import { CheckIcon, CrumpledPaperIcon, ResetIcon } from "@radix-ui/react-icons";
 
 export default function ConversationTitle(props) {
@@ -23,10 +14,8 @@ export default function ConversationTitle(props) {
 
   const { conversation, document, updateConversation } = props;
 
-  const [title, setTitle] = useState();
-  const [newTitle, setNewTitle] = useState();
-
-  console.log(conversation)
+  const [title, setTitle] = useState("");
+  const [newTitle, setNewTitle] = useState("");
 
   async function updateTitle() {
     const json = await updateConversationAPI(conversation.id, newTitle);
@@ -60,9 +49,9 @@ export default function ConversationTitle(props) {
     if (conversation != null) {
       setTitle(conversation.title);
       setNewTitle(conversation.title);
-    }else{
-        setTitle('New conversation');
-        setNewTitle('New conversation');
+    } else {
+      setTitle("New conversation");
+      setNewTitle("New conversation");
     }
   }, [conversation]);
 

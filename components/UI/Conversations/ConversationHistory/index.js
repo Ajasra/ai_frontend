@@ -6,7 +6,9 @@ import { ShowHistory } from "../History";
 import { loginUser } from "../../../../utils/API/user_api";
 import { getConversationHistory } from "../../../../utils/API/conversarion_api";
 
-export function ConversationHistory() {
+export function ConversationHistory(props) {
+  const { conversation, setConv } = props;
+
   const userDetails = useContext(UserContext);
   const setUserDetails = useContext(UserDispatchContext);
 
@@ -15,7 +17,6 @@ export function ConversationHistory() {
   const [processing, setProcessing] = useState(false);
 
   function addResponse(question, response, error = false) {
-    console.log(response);
     try {
       setHistory([
         ...history,
@@ -28,7 +29,7 @@ export function ConversationHistory() {
         },
       ]);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -49,13 +50,6 @@ export function ConversationHistory() {
       });
       setHistory(hist);
     }
-  }
-
-  function updateConversation(conv_id) {
-    setUserDetails({
-      ...userDetails,
-      conversation: conv_id,
-    });
   }
 
   useEffect(() => {
@@ -87,10 +81,11 @@ export function ConversationHistory() {
         user_id={userDetails.user_id}
         document_id={userDetails.document}
         conv_id={conv_id}
-        setConversationId={updateConversation}
         addResponse={addResponse}
         processing={processing}
         setProcessing={setProcessing}
+        conversation={conversation}
+        setConv={setConv}
       />
     </Container>
   );

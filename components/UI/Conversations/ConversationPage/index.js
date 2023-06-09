@@ -1,15 +1,27 @@
 import { Title, Divider, Text, Accordion } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../../User/UserContext";
+import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { ConversationHistory } from "../ConversationHistory";
 import { getConversationByIdApi } from "../../../../utils/API/conversarion_api";
 import ConversationTitle from "../ConvTitle";
 
 export function ConversationPage() {
   const userDetails = useContext(UserContext);
+  const setUserDetails = useContext(UserDispatchContext);
 
   const [document, setDocument] = useState(null);
   const [conversation, setConversation] = useState(null);
+
+  function SetNewConversation(conv_id) {
+    setConversation({
+      ...conversation,
+      id: conv_id,
+    });
+    setUserDetails({
+      ...userDetails,
+      conversation: conv_id,
+    });
+  }
 
   useEffect(() => {
     if (userDetails?.document != null) {
@@ -18,7 +30,10 @@ export function ConversationPage() {
         (doc) => doc.id == userDetails.document
       );
       setDocument(doc[0]);
-      setConversation(null);
+      setConversation({
+        title: "chat over " + doc[0].name,
+        id: null,
+      });
     }
   }, [userDetails?.document]);
 
@@ -27,7 +42,6 @@ export function ConversationPage() {
     if (conv_id != null) {
       const json = await getConversationByIdApi(conv_id);
       if (json["code"] == "200") {
-        console.log(json["response"]);
         setConversation({
           title: json["response"]["title"],
           id: json["response"]["conv_id"],
@@ -58,7 +72,10 @@ export function ConversationPage() {
           </Accordion.Panel>
         </Accordion.Item>
       </Accordion>
-      <ConversationHistory />
+      <ConversationHistory
+        conversation={conversation}
+        setConv={SetNewConversation}
+      />
     </>
   );
 }

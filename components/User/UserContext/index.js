@@ -10,21 +10,20 @@ function UserProvider({ children }) {
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
-    console.log(loggedInUser);
     if (loggedInUser) {
       setUser(JSON.parse(loggedInUser));
-    }else{
-        setUser({
-          user_id: null,
-          user_name: null,
-          user_email: null,
-          hash: null,
-          page: null,
-          action: null,
-          conversation: null,
-          document: null,
-          user_documents: null,
-        });
+    } else {
+      setUser({
+        user_id: null,
+        user_name: null,
+        user_email: null,
+        hash: null,
+        page: null,
+        action: null,
+        conversation: null,
+        document: null,
+        user_documents: null,
+      });
     }
   }, []);
 

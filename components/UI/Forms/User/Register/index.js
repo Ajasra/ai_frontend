@@ -6,6 +6,7 @@ import { UserDispatchContext } from "../../../../User/UserContext";
 import styles from "../../../../../styles/LoginForm.module.css";
 import { registerUser } from "../../../../../utils/API/user_api";
 import { IconMail } from "@tabler/icons-react";
+import {ShowError, ShowSuccess} from "../../../../../utils/Notifications/nt_show";
 
 export function RegisterForm() {
   const [name, setName] = useState("");
@@ -73,8 +74,6 @@ export function RegisterForm() {
   }
 
   useEffect(() => {
-
-      console.log(!nameError)
     if (
       !nameError && !emailError && !passwordError && !passwordConfirmError && name && email && password && passwordConfirm
     ) {
@@ -95,12 +94,13 @@ export function RegisterForm() {
             user_email: email,
             action: null,
           });
+          ShowSuccess("Registration successful", "You can now login");
         } else {
-          setEmailError(json['response']);
+          ShowError("Registration failed", json["response"]);
         }
       });
     } else {
-      console.log("login failed");
+      ShowError("Registration failed", "Please fill in all fields");
     }
   }
 

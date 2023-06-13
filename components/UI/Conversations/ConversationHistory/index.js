@@ -5,6 +5,7 @@ import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { ShowHistory } from "../History";
 import { loginUser } from "../../../../utils/API/user_api";
 import { getConversationHistory } from "../../../../utils/API/conversarion_api";
+import {ShowError} from "../../../../utils/Notifications/nt_show";
 
 export function ConversationHistory(props) {
   const { conversation, setConv } = props;
@@ -56,6 +57,8 @@ export function ConversationHistory(props) {
         });
       });
       setHistory(hist);
+    }else{
+      ShowError("Error", "Cannot get conversation history");
     }
   }
 

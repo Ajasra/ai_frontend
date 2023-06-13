@@ -1,13 +1,18 @@
 import { Button, Container, FileInput, Group, Title } from "@mantine/core";
 import { useContext, useState } from "react";
-import { UserContext } from "../../../User/UserContext";
+import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { uploadDocumentApi } from "../../../../utils/API/docs_api";
+import {
+  ShowError,
+  ShowSuccess,
+} from "../../../../utils/Notifications/nt_show";
 
 export function UploadDocument() {
   const [file, setFile] = useState(null);
   const [fileError, setFileError] = useState(null);
 
   const userDetails = useContext(UserContext);
+  const setUserDetails = useContext(UserDispatchContext);
 
   const [uploading, setUploading] = useState(false);
 
@@ -44,11 +49,16 @@ export function UploadDocument() {
       if (json["code"] == "200") {
         setUploading(false);
         setFile(null);
+        ShowSuccess("File uploaded successfully", file.name);
+        setUserDetails({
+          ...userDetails,
+          action: "updateDocuments",
+        });
       } else {
         if (json["result"]["message"] != null) {
-          setFileError(json["result"]["message"]);
+          ShowError("Upload failed", json["result"]["message"]);
         } else {
-          setFileError("Upload failed");
+          ShowError("Upload failed", "Please try again later");
         }
         setUploading(false);
       }

@@ -1,6 +1,8 @@
 import { Accordion, Button, Divider, Title, Text } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
+import {deleteDocumentApi} from "../../../../utils/API/docs_api";
+import {ShowError, ShowSuccess} from "../../../../utils/Notifications/nt_show";
 
 export default function DocumentListPage() {
   const userDetails = useContext(UserContext);
@@ -13,6 +15,22 @@ export default function DocumentListPage() {
       ...userDetails,
       document: doc_id,
     });
+  }
+
+  async function DeleteDocument(doc_id) {
+    console.log("Delete document " + doc_id);
+    const res = await deleteDocumentApi(doc_id);
+    if (res["code"] == "200") {
+        console.log("Document deleted");
+        setUserDetails({
+            ...userDetails,
+            action: "updateDocuments"
+        });
+        ShowSuccess("Document deleted");
+    }else {
+      ShowError("Error deleting document");
+    }
+    
   }
 
   useEffect(() => {
@@ -42,6 +60,16 @@ export default function DocumentListPage() {
                 }}
               >
                 Select
+              </Button>
+              <Button
+                color="red"
+                variant="outline"
+                ml="2em"
+                onClick={() => {
+                  DeleteDocument(doc.id);
+                }}
+              >
+                Delete
               </Button>
             </Accordion.Panel>
           </Accordion.Item>

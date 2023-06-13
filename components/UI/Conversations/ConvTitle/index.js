@@ -1,6 +1,5 @@
 import { Button, Container, Group, Input, Title, Tooltip } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
-import { console } from "next/dist/compiled/@edge-runtime/primitives/console";
 import {
   deleteConversationAPI,
   updateConversationAPI,
@@ -12,6 +11,10 @@ import {
   CrumpledPaperIcon,
   ResetIcon,
 } from "@radix-ui/react-icons";
+import {
+  ShowError,
+  ShowSuccess,
+} from "../../../../utils/Notifications/nt_show";
 
 export default function ConversationTitle(props) {
   const userDetails = useContext(UserContext);
@@ -25,13 +28,14 @@ export default function ConversationTitle(props) {
   async function updateTitle() {
     const json = await updateConversationAPI(conversation.id, newTitle);
     if (json["code"] == "200") {
-      if (json["response"] == true) {
-        updateConversation(conversation.id);
-        setUserDetails({
-          ...userDetails,
-          action: "updateConversation",
-        });
-      }
+      setUserDetails({
+        ...userDetails,
+        action: "updateConversations",
+      });
+      ShowSuccess("Conversation title updated");
+      updateConversation(conversation.id);
+    } else {
+      ShowError("Error updating conversation title");
     }
   }
 
@@ -44,9 +48,12 @@ export default function ConversationTitle(props) {
           ...userDetails,
           conversation: null,
           document: null,
-          action: "updateConversation",
+          action: "updateConversations",
         });
       }
+      ShowSuccess("Conversation deleted");
+    } else {
+      ShowError("Error deleting conversation");
     }
   }
 

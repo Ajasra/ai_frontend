@@ -26,8 +26,8 @@ export default function Home() {
     <>
       <AppShell
         padding="md"
-        navbarOffsetBreakpoint="sm"
-        asideOffsetBreakpoint="sm"
+        navbarOffsetBreakpoint="md"
+        // asideOffsetBreakpoint="sm"
         navbar={<AppNavbar opened={menuOpened} setOpened={setMenuOpened} />}
         // aside={
         //   <MediaQuery smallerThan="sm" styles={{ display: "none" }}>

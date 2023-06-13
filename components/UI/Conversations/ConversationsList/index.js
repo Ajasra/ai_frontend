@@ -1,8 +1,7 @@
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { useContext, useEffect, useState } from "react";
-import { Button, Tooltip } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { getConversationsListApi } from "../../../../utils/API/conversarion_api";
-import { IconLayoutGridAdd } from "@tabler/icons-react";
 
 export default function ConversationsList() {
   const userDetails = useContext(UserContext);
@@ -33,19 +32,17 @@ export default function ConversationsList() {
 
   async function createNewConversation() {
     // TODO: create new conversation
-    if(userDetails.user_id != null){
+    if (userDetails.user_id != null) {
       let cur_doc = 0;
-      if(userDetails.document != null){
+      if (userDetails.document != null) {
         cur_doc = userDetails.document;
-      }else{
+      } else {
         // TODO: do not allow create conversation without document
         // alert('Select a document to create a conversation')
         // console.log('Select a document to create a conversation')
       }
-      console.log(cur_doc)
+      console.log(cur_doc);
     }
-    
-    
   }
 
   function getDocumentId() {
@@ -63,7 +60,8 @@ export default function ConversationsList() {
   }, [userDetails.user_id]);
 
   useEffect(() => {
-    if (userDetails.action == "updateConversation") {
+    if (userDetails.action == "updateConversations") {
+      console.log("updateConversations");
       parseConversations();
 
       setUserDetails({
@@ -73,6 +71,10 @@ export default function ConversationsList() {
     }
     if (userDetails.action == "closeConversation") {
       setConversation(null);
+      setUserDetails({
+        ...userDetails,
+        action: null,
+      });
     }
   }, [userDetails.action]);
 

@@ -20,7 +20,7 @@ export default function AppHeader(props) {
   return (
     <Header height={{ base: 70, md: 70 }} p="md">
       <Group position="apart" className={styles.Main}>
-        <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+        <MediaQuery largerThan="md" styles={{ display: "none" }}>
           <Burger
             opened={opened}
             onClick={() => setOpened((o) => !o)}

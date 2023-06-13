@@ -7,6 +7,7 @@ import { UserContext, UserDispatchContext } from "../../../../User/UserContext";
 import styles from "../../../../../styles/LoginForm.module.css";
 import { loginUser } from "../../../../../utils/API/user_api";
 import { IconMail } from "@tabler/icons-react";
+import { ShowError } from "../../../../../utils/Notifications/nt_show";
 
 export default function LoginForm(props) {
   const [name, setName] = useState("");
@@ -60,7 +61,6 @@ export default function LoginForm(props) {
   async function Login() {
     if (proceed) {
       const json = await loginUser(name, password);
-      console.log(json);
       if (json["code"] == "200") {
         setUserDetails({
           ...userDetails,
@@ -72,10 +72,9 @@ export default function LoginForm(props) {
         });
         // setResponse(json['response']['message'])
       } else {
-        setNameError(json["response"]);
+        // setNameError(json["response"]);
+        ShowError("Login", json["response"]);
       }
-    } else {
-      console.log("login failed");
     }
   }
 

@@ -1,10 +1,11 @@
-import { Button, Container, Input, Text, Title } from "@mantine/core";
+import {Button, Container, Input, Loader, Text, Title} from "@mantine/core";
 import { useContext, useState } from "react";
 import {
   createConversationApi,
   getApiResponse,
 } from "../../../../utils/API/conversarion_api";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
+import {ShowError, ShowInfo} from "../../../../utils/Notifications/nt_show";
 
 export default function RequestForm(props) {
   const userDetails = useContext(UserContext);
@@ -47,6 +48,7 @@ export default function RequestForm(props) {
       }
 
       setProcessing(true);
+      ShowInfo("Please wait", "Getting response...");
       const json = await getApiResponse(
         question,
         user_id,
@@ -63,6 +65,7 @@ export default function RequestForm(props) {
         // });
       } else if (json["response"]["status"] == "error") {
         addResponse(question, json["response"]["message"], true);
+        ShowError("Error", json["response"]["message"]);
       }
       window.scrollTo(0, document.body.scrollHeight, { behavior: "smooth" });
       setProcessing(false);
@@ -84,7 +87,7 @@ export default function RequestForm(props) {
         onChange={(event) => setQuestion(event.target.value)}
       />
       <Button onClick={getResponse} mt={16} disabled={processing}>
-        Ask
+        {processing ? <Loader size="sm" /> : "Ask" }
       </Button>
     </Container>
   );

@@ -46,3 +46,31 @@ export async function getDocumentListApi(user_id) {
         return error
     }
 }
+
+
+export async function deleteDocumentApi(doc_id){
+const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const raw = JSON.stringify({
+    doc_id: doc_id,
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  const api_url = `${backend_api}/docs/delete`;
+
+    try {
+        const response = await fetch(api_url, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+  
+}

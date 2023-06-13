@@ -90,6 +90,18 @@ export default function DocumentList() {
   useEffect(() => {
     getDocumentSummary(document);
   }, [userDetails.document]);
+  
+  // console.log(userDetails.action);
+
+  useEffect(() => {
+    if (userDetails.action == "updateDocuments") {
+      parseDocuments();
+      setUserDetails({
+        ...userDetails,
+        action: null,
+      });
+    }
+  }, [userDetails.action]);
 
   return (
     <Container>

@@ -7,6 +7,16 @@ import { loginUser } from "../../../../utils/API/user_api";
 import { getConversationHistory } from "../../../../utils/API/conversarion_api";
 import {ShowError} from "../../../../utils/Notifications/nt_show";
 
+
+function splitString(str) {
+  if (str == null) {
+    return [];
+  }else{
+    return str.split("\n");
+  }
+}
+
+
 export function ConversationHistory(props) {
   const { conversation, setConv } = props;
 
@@ -53,7 +63,7 @@ export function ConversationHistory(props) {
 
           error: false,
           source: [],
-          followup: [],
+          followup: splitString(item["followup"])
         });
       });
       setHistory(hist);

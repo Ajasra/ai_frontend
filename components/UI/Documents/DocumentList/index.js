@@ -102,6 +102,8 @@ export default function DocumentList() {
       });
     }
   }, [userDetails.action]);
+  
+  console.log(userDetails.action)
 
   return (
     <Container>

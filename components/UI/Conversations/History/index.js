@@ -1,6 +1,7 @@
 import { Container, Title, Text, Accordion, Divider } from "@mantine/core";
 import { getApiResponse } from "../../../../utils/API/conversarion_api";
 import { getRandomIntSeed } from "../../../../utils/functions";
+import {ShowInfo} from "../../../../utils/Notifications/nt_show";
 
 export function ShowHistory(props) {
   const {
@@ -18,6 +19,7 @@ export function ShowHistory(props) {
 
     if (continueRequest) {
       setProcessing(true);
+      ShowInfo("Please wait", "Getting response...");
       const json = await getApiResponse(
         question,
         user_id,

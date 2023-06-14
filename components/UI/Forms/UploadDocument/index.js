@@ -1,4 +1,4 @@
-import { Button, Container, FileInput, Group, Title } from "@mantine/core";
+import {Button, Container, FileInput, Group, Loader, Title} from "@mantine/core";
 import { useContext, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { uploadDocumentApi } from "../../../../utils/API/docs_api";
@@ -78,7 +78,7 @@ export function UploadDocument() {
         error={fileError}
       />
       <Button onClick={Upload} disabled={uploading} mt={16}>
-        Upload
+        {uploading ? <Loader size="sm" /> : "Upload" }
       </Button>
     </Container>
   );

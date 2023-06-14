@@ -29,11 +29,15 @@ export function ConversationPage() {
       const doc = userDetails.documents.filter(
         (doc) => doc.id == userDetails.document
       );
-      setDocument(doc[0]);
-      setConversation({
-        title: "chat over " + doc[0].name,
-        id: null,
-      });
+      if(doc.length > 0) {
+        setDocument(doc[0]);
+        setConversation({
+          title: "chat over " + doc[0].name,
+          id: null,
+        });
+      }else{
+        setDocument(null);
+      }
     }
   }, [userDetails?.document]);
 

@@ -55,6 +55,7 @@ export default function RequestForm(props) {
         document_id,
         conv_id
       );
+      console.log(json)
       if (json["response"]["status"] == "success") {
         addResponse(question, json["response"]);
         // setConversationId(json["response"]["data"]["conversation_id"]);

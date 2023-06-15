@@ -5,17 +5,15 @@ import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { ShowHistory } from "../History";
 import { loginUser } from "../../../../utils/API/user_api";
 import { getConversationHistory } from "../../../../utils/API/conversarion_api";
-import {ShowError} from "../../../../utils/Notifications/nt_show";
-
+import { ShowError } from "../../../../utils/Notifications/nt_show";
 
 function splitString(str) {
   if (str == null) {
     return [];
-  }else{
+  } else {
     return str.split("\n");
   }
 }
-
 
 export function ConversationHistory(props) {
   const { conversation, setConv } = props;
@@ -29,23 +27,32 @@ export function ConversationHistory(props) {
 
   function addResponse(question, response, error = false) {
     try {
+      console.log(response);
 
       let sources = response["data"]["source"];
-      // TODO: clean dublicatees for sources
 
       setHistory([
         ...history,
         {
+          // id: response["data"]["id"],
           question: question,
           answer: response["data"]["response"],
           error: error,
-          source: sources,
+          source: SourcesToArray(sources),
           followup: response["data"]["follow_up_questions"],
         },
       ]);
     } catch (e) {
       console.error(e);
     }
+  }
+
+  function SourcesToArray(sources) {
+    let result = [];
+    if (sources != null) {
+      result = JSON.parse(sources);
+    }
+    return result;
   }
 
   async function getHistory(conv_id) {
@@ -56,18 +63,21 @@ export function ConversationHistory(props) {
       // reverse the order of the history
       const resp = json["response"].reverse();
 
+      console.log(resp);
+
       resp?.map((item) => {
         hist.push({
+          id: item["hist_id"],
           question: item["prompt"],
           answer: item["answer"],
-
           error: false,
-          source: [],
-          followup: splitString(item["followup"])
+          source: SourcesToArray(item["sources"]),
+          followup: splitString(item["followup"]),
+          feedback: item["feedback"],
         });
       });
       setHistory(hist);
-    }else{
+    } else {
       ShowError("Error", "Cannot get conversation history");
     }
   }
@@ -90,6 +100,7 @@ export function ConversationHistory(props) {
     <Container>
       <ShowHistory
         history={history}
+        setHistory={setHistory}
         user_id={userDetails.user_id}
         document_id={userDetails.document}
         conv_id={conv_id}

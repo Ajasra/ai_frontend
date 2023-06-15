@@ -192,3 +192,30 @@ export async function createConversationApi(user_id, doc_id, title) {
     return error;
   }
 }
+
+export async function MarkHistoryApi(hist_id, feedback) {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+        hist_id: hist_id,
+        feedback: feedback,
+    });
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+    };
+
+    const api_url = `${backend_api}/conv/history/feedback`;
+
+    try {
+        const response = await fetch(api_url, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+}

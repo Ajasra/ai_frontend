@@ -6,6 +6,7 @@ import RequestForm from "../../Forms/RequestForm";
 import { SignUpPage } from "../../../pages/Signin";
 import DocumentListPage from "../../Documents/DocumentPage";
 import { ConversationPage } from "../../Conversations/ConversationPage";
+import ConversationsListPage from "../../Conversations/ConversationsListPage";
 
 export function Content() {
   const userDetails = useContext(UserContext);
@@ -15,7 +16,10 @@ export function Content() {
       {userDetails?.user_id == null ? (
         <SignUpPage />
       ) : userDetails?.document == null ? (
-        <DocumentListPage />
+        <>
+          <DocumentListPage />
+          <ConversationsListPage />
+        </>
       ) : (
         <>
           <ConversationPage />

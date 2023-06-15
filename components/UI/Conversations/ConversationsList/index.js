@@ -86,6 +86,14 @@ export default function ConversationsList() {
     });
   }, [conversation]);
 
+  useEffect(() => {
+      setUserDetails({
+        ...userDetails,
+        userConversations: userConversations,
+      });
+
+  },[userConversations])
+
   return (
     <>
       <div>

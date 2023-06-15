@@ -20,6 +20,7 @@ export function ConversationPage() {
     setUserDetails({
       ...userDetails,
       conversation: conv_id,
+      action: "updateConversations",
     });
   }
 
@@ -32,7 +33,7 @@ export function ConversationPage() {
       if(doc.length > 0) {
         setDocument(doc[0]);
         setConversation({
-          title: "chat over " + doc[0].name,
+          title: "New: " + doc[0].name.split(".")[0],
           id: null,
         });
       }else{

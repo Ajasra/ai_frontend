@@ -1,11 +1,25 @@
-import { Container, Title, Text, Accordion, Divider } from "@mantine/core";
-import { getApiResponse } from "../../../../utils/API/conversarion_api";
+import {
+  Container,
+  Title,
+  Text,
+  Accordion,
+  Divider,
+  Button,
+  Tooltip,
+} from "@mantine/core";
+import {
+  getApiResponse,
+  MarkHistoryApi,
+} from "../../../../utils/API/conversarion_api";
 import { getRandomIntSeed } from "../../../../utils/functions";
-import {ShowInfo} from "../../../../utils/Notifications/nt_show";
+import {ShowError, ShowInfo, ShowSuccess} from "../../../../utils/Notifications/nt_show";
+import ReactMarkdown from "react-markdown";
+import {CircleBackslashIcon, Cross1Icon} from "@radix-ui/react-icons";
 
 export function ShowHistory(props) {
   const {
     history,
+      setHistory,
     addResponse,
     user_id,
     document_id,
@@ -35,16 +49,54 @@ export function ShowHistory(props) {
     }
   }
 
+  async function MarkAnswer(hist_id, feedback) {
+    const json = await MarkHistoryApi(hist_id, 1 - feedback);
+    if (json["code"] == 200) {
+      ShowSuccess("Success", "Answer marked as bad");
+    //   change feedback for the history with this id in the list
+        let newHistory = history.map((item) => {
+            if (item.id == hist_id) {
+                item.feedback = 1 - feedback;
+            }
+            return item;
+        })
+        setHistory(newHistory);
+
+
+    } else {
+      ShowError("Error", "Could not mark answer as bad");
+    }
+  }
+
+  console.log(history);
+
   return (
     <>
       {history?.map((item, hist_ind) => (
         <>
           {" "}
-          <Container key={"hist_" + +getRandomIntSeed(10000, hist_ind)} mt={32}>
+          <Container
+            key={"hist_" + +getRandomIntSeed(10000, hist_ind)}
+            mt={32}
+            style={{ position: "relative" }}
+          >
             <Title order={3} color="blue.6">
               {item.question}
             </Title>
-            <Text>{item.answer}</Text>
+            <Tooltip label="Bad answer" className="mark-answer">
+              <Button
+                variant="outline"
+                color={item.feedback ? "red": "blue"}
+                onClick={() => {
+                  MarkAnswer(item.id, item.feedback);
+                }}
+              >
+                {item.feedback ? <Cross1Icon /> : <CircleBackslashIcon />}
+              </Button>
+            </Tooltip>
+            <Text>
+              <ReactMarkdown>{item.answer}</ReactMarkdown>
+            </Text>
             {item.followup.length > 0 && (
               <Container>
                 <Title order={5} mt={16}>
@@ -86,17 +138,15 @@ export function ShowHistory(props) {
                           "_" +
                           hist_ind
                         }
-                        value={`${source.metadata.source}_${index}`}
+                        value={`${source.title}_${index}`}
                       >
                         <Accordion.Control>
                           <Title order={5} p={0} m={0}>
-                            {source.metadata.source.split("/").at(-1)} /
-                            {" page: "}
-                            {source.metadata.page}
+                            {source.title}
                           </Title>
                         </Accordion.Control>
                         <Accordion.Panel>
-                          <Text>{source.page_content}</Text>
+                          <Text>{source.source}</Text>
                         </Accordion.Panel>
                       </Accordion.Item>
                     </>

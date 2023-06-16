@@ -36,6 +36,14 @@ export function UploadDocument() {
       setFileError("");
     }
 
+    //  check if filesize less then 10mb
+    if (file != null && file.size > 10485760) {
+        setFileError("File size should be less than 10MB");
+        continueUpload = false;
+    }else {
+        setFileError("");
+    }
+
     if (continueUpload) {
       setUploading(true);
 

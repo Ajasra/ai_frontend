@@ -1,8 +1,8 @@
 import { Button, Container, Group, Input, Title, Tooltip } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import {
-  deleteConversationAPI,
-  updateConversationAPI,
+  deleteConversationAPI, updateConverationActiveAPI,
+  updateConversationTitleAPI,
 } from "../../../../utils/API/conversarion_api";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import {
@@ -26,7 +26,7 @@ export default function ConversationTitle(props) {
   const [newTitle, setNewTitle] = useState("");
 
   async function updateTitle() {
-    const json = await updateConversationAPI(conversation.id, newTitle);
+    const json = await updateConversationTitleAPI(conversation.id, newTitle);
     if (json["code"] == "200") {
       setUserDetails({
         ...userDetails,
@@ -40,7 +40,7 @@ export default function ConversationTitle(props) {
   }
 
   async function deleteConversation() {
-    const json = await deleteConversationAPI(conversation.id);
+    const json = await updateConverationActiveAPI(conversation.id, 0);
     if (json["code"] == "200") {
       if (json["response"] == true) {
         updateConversation(conversation.id);
@@ -63,6 +63,9 @@ export default function ConversationTitle(props) {
       conversation: null,
       document: null,
       action: "closeConversation",
+      page: {
+        type: null,
+      }
     });
   }
 

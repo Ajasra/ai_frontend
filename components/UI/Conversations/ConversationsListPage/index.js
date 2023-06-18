@@ -1,10 +1,7 @@
-import { Accordion, Button, Container, Title } from "@mantine/core";
+import { Accordion, Button, Title } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
-import {
-  deleteConversationAPI,
-  getConversationsListApi,
-} from "../../../../utils/API/conversarion_api";
+import { updateConverationActiveAPI } from "../../../../utils/API/conversarion_api";
 import {
   ShowError,
   ShowSuccess,
@@ -18,7 +15,7 @@ export default function ConversationsListPage() {
   const [conversation, setConversation] = useState(null);
 
   async function deleteConversation(conv_id) {
-    const json = await deleteConversationAPI(conv_id);
+    const json = await updateConverationActiveAPI(conv_id, 0);
     if (json["code"] == "200") {
       if (json["response"] == true) {
         // updateConversation(conversation.id);
@@ -46,21 +43,28 @@ export default function ConversationsListPage() {
   }
 
   useEffect(() => {
+    let type = "conversation";
+    if (conversation == null) {
+      type = null;
+    }
     setUserDetails({
       ...userDetails,
       conversation: conversation,
       document: getDocumentId(),
+      page: {
+        type: type,
+      },
     });
   }, [conversation]);
 
   useEffect(() => {
-    if (userDetails.userConversations != null) {
+    if (userDetails?.userConversations != null) {
       setUserConversations(userDetails.userConversations);
     }
-  }, [userDetails.user_id, userDetails.userConversations]);
+  }, [userDetails?.user_id, userDetails?.userConversations]);
 
   return (
-    < >
+    <>
       <Title mt={32}>Your conversations</Title>
       <Accordion>
         {userConversations != null &&

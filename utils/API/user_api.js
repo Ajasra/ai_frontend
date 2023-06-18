@@ -1,5 +1,3 @@
-import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
-
 const backend_api = process.env.NEXT_PUBLIC_BACKEND_URL;
 const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -10,6 +8,7 @@ export async function loginUser(email, password) {
   const raw = JSON.stringify({
     email: email,
     password: password,
+    api_key: api_key,
   });
 
   const requestOptions = {
@@ -40,6 +39,7 @@ export async function registerUser(email, name, password) {
     email: email,
     name: name,
     password: password,
+    api_key: api_key,
   });
 
   const requestOptions = {

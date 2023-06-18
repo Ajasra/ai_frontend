@@ -1,4 +1,11 @@
-import {Button, Container, FileInput, Group, Loader, Title} from "@mantine/core";
+import {
+  Button,
+  Container,
+  FileInput,
+  Group,
+  Loader,
+  Title,
+} from "@mantine/core";
 import { useContext, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { uploadDocumentApi } from "../../../../utils/API/docs_api";
@@ -6,6 +13,7 @@ import {
   ShowError,
   ShowSuccess,
 } from "../../../../utils/Notifications/nt_show";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 export function UploadDocument() {
   const [file, setFile] = useState(null);
@@ -38,10 +46,10 @@ export function UploadDocument() {
 
     //  check if filesize less then 10mb
     if (file != null && file.size > 10485760) {
-        setFileError("File size should be less than 10MB");
-        continueUpload = false;
-    }else {
-        setFileError("");
+      setFileError("File size should be less than 10MB");
+      continueUpload = false;
+    } else {
+      setFileError("");
     }
 
     if (continueUpload) {
@@ -52,6 +60,7 @@ export function UploadDocument() {
       formData.append("file", file, file.name);
       formData.append("user_id", userDetails.user_id);
       formData.append("force", true);
+      formData.append("api_key", process.env.NEXT_PUBLIC_API_KEY);
 
       const json = await uploadDocumentApi(formData);
       if (json["code"] == "200") {
@@ -86,7 +95,7 @@ export function UploadDocument() {
         error={fileError}
       />
       <Button onClick={Upload} disabled={uploading} mt={16}>
-        {uploading ? <Loader size="sm" /> : "Upload" }
+        {uploading ? <Loader size="sm" /> : "Upload"}
       </Button>
     </Container>
   );

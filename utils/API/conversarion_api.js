@@ -1,5 +1,3 @@
-import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
-
 const backend_api = process.env.NEXT_PUBLIC_BACKEND_URL;
 const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -40,6 +38,7 @@ export async function getConversationHistory(conv_id) {
   const raw = JSON.stringify({
     conv_id: conv_id,
     limit: 100,
+    api_key: api_key,
   });
 
   const requestOptions = {
@@ -66,6 +65,7 @@ export async function getConversationByIdApi(conv_id) {
 
   const raw = JSON.stringify({
     conv_id: conv_id,
+    api_key: api_key,
   });
 
   const requestOptions = {
@@ -86,13 +86,42 @@ export async function getConversationByIdApi(conv_id) {
   }
 }
 
-export async function updateConversationAPI(conv_id, title) {
+export async function updateConversationTitleAPI(conv_id, title) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
   const raw = JSON.stringify({
     conv_id: conv_id,
     title: title,
+    api_key: api_key,
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  const api_url = `${backend_api}/conv/update`;
+
+  try {
+    const response = await fetch(api_url, requestOptions);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+}
+
+export async function updateConverationActiveAPI(conv_id, active) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const raw = JSON.stringify({
+    conv_id: conv_id,
+    active: active,
+    api_key: api_key,
   });
 
   const requestOptions = {
@@ -119,6 +148,7 @@ export async function deleteConversationAPI(conv_id) {
 
   const raw = JSON.stringify({
     conv_id: conv_id,
+    api_key: api_key,
   });
 
   const requestOptions = {
@@ -145,6 +175,7 @@ export async function getConversationsListApi(user_id) {
 
   const raw = JSON.stringify({
     user_id: user_id,
+    api_key: api_key,
   });
 
   const requestOptions = {
@@ -194,28 +225,29 @@ export async function createConversationApi(user_id, doc_id, title) {
 }
 
 export async function MarkHistoryApi(hist_id, feedback) {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
 
-    const raw = JSON.stringify({
-        hist_id: hist_id,
-        feedback: feedback,
-    });
+  const raw = JSON.stringify({
+    hist_id: hist_id,
+    feedback: feedback,
+    api_key: api_key,
+  });
 
-    const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-    };
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
 
-    const api_url = `${backend_api}/conv/history/feedback`;
+  const api_url = `${backend_api}/conv/history/feedback`;
 
-    try {
-        const response = await fetch(api_url, requestOptions);
-        return await response.json();
-    } catch (error) {
-        console.error(error);
-        return error;
-    }
+  try {
+    const response = await fetch(api_url, requestOptions);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
 }

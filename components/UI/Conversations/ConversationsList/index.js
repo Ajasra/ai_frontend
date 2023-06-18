@@ -74,25 +74,34 @@ export default function ConversationsList() {
       setUserDetails({
         ...userDetails,
         action: null,
+        page: {
+          type: null,
+        },
       });
     }
   }, [userDetails.action]);
 
   useEffect(() => {
+    let type = "conversation"
+    if (conversation == null){
+        type = null
+    }
     setUserDetails({
       ...userDetails,
       conversation: conversation,
       document: getDocumentId(),
+        page: {
+            type: type,
+        }
     });
   }, [conversation]);
 
   useEffect(() => {
-      setUserDetails({
-        ...userDetails,
-        userConversations: userConversations,
-      });
-
-  },[userConversations])
+    setUserDetails({
+      ...userDetails,
+      userConversations: userConversations,
+    });
+  }, [userConversations]);
 
   return (
     <>

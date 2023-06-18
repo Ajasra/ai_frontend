@@ -1,12 +1,17 @@
 import { Accordion, Button, Divider, Title, Text } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
-import {deleteDocumentApi} from "../../../../utils/API/docs_api";
-import {ShowError, ShowSuccess} from "../../../../utils/Notifications/nt_show";
+import { deleteDocumentApi } from "../../../../utils/API/docs_api";
+import {
+  ShowError,
+  ShowSuccess,
+} from "../../../../utils/Notifications/nt_show";
 
-export default function DocumentListPage() {
+export default function DocumentListPage(props) {
   const userDetails = useContext(UserContext);
   const setUserDetails = useContext(UserDispatchContext);
+  
+  const { type = "my"} = props;
 
   const [documents, setDocuments] = useState([]);
 
@@ -14,6 +19,9 @@ export default function DocumentListPage() {
     setUserDetails({
       ...userDetails,
       document: doc_id,
+      page: {
+        type: "conversation",
+      },
     });
   }
 
@@ -21,16 +29,15 @@ export default function DocumentListPage() {
     console.log("Delete document " + doc_id);
     const res = await deleteDocumentApi(doc_id);
     if (res["code"] == "200") {
-        console.log("Document deleted");
-        setUserDetails({
-            ...userDetails,
-            action: "updateDocuments"
-        });
-        ShowSuccess("Document deleted");
-    }else {
+      console.log("Document deleted");
+      setUserDetails({
+        ...userDetails,
+        action: "updateDocuments",
+      });
+      ShowSuccess("Document deleted");
+    } else {
       ShowError("Error deleting document");
     }
-    
   }
 
   useEffect(() => {
@@ -43,7 +50,10 @@ export default function DocumentListPage() {
 
   return (
     <>
-      <Title>Your documents</Title>
+      <Title>
+        {type === "my" ? "My documents" : "All documents"}
+
+      </Title>
       <Accordion>
         {documents.map((doc) => (
           <Accordion.Item value={doc.id} key={doc.id}>

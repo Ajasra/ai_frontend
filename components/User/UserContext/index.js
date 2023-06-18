@@ -23,6 +23,7 @@ function UserProvider({ children }) {
         conversation: null,
         document: null,
         user_documents: null,
+        user_role: null,
       });
     }
   }, []);

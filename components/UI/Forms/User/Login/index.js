@@ -61,6 +61,7 @@ export default function LoginForm(props) {
   async function Login() {
     if (proceed) {
       const json = await loginUser(name, password);
+      console.log(json)
       if (json["code"] == "200") {
         setUserDetails({
           ...userDetails,
@@ -69,6 +70,7 @@ export default function LoginForm(props) {
           user_name: json["data"]["name"],
           hash: json["data"]["password"],
           email: json["data"]["email"],
+          user_role: json["data"]["role"],
         });
         // setResponse(json['response']['message'])
       } else {

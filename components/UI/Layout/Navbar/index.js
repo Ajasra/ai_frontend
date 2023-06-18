@@ -9,6 +9,7 @@ import DocumentList from "../../Documents/DocumentList";
 import { IconFolder, IconMessageChatbot, IconUser } from "@tabler/icons-react";
 import { ChatBubbleIcon } from "@radix-ui/react-icons";
 import ConversationsList from "../../Conversations/ConversationsList";
+import {AdminPanelNav} from "../../../Admin/Panel";
 
 export default function AppNavbar(props) {
   const { opened, setOpened } = props;
@@ -62,6 +63,19 @@ export default function AppNavbar(props) {
                       <UserInfo />
                     </Accordion.Panel>
                   </Accordion.Item>
+                  {userDetails.user_role == 10 && (
+                    <Accordion.Item value="admin">
+                      <Accordion.Control
+                        icon={<IconMessageChatbot size={rem(20)} />}
+                      >
+                        Admin panel
+                      </Accordion.Control>
+                      <Accordion.Panel>
+                        <Divider variant="solid" />
+                        <AdminPanelNav />
+                      </Accordion.Panel>
+                    </Accordion.Item>
+                  )}
                 </>
               )}
             </Accordion>

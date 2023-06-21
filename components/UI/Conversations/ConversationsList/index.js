@@ -82,17 +82,17 @@ export default function ConversationsList() {
   }, [userDetails.action]);
 
   useEffect(() => {
-    let type = "conversation"
-    if (conversation == null){
-        type = null
+    let type = "conversation";
+    if (conversation == null) {
+      type = null;
     }
     setUserDetails({
       ...userDetails,
       conversation: conversation,
       document: getDocumentId(),
-        page: {
-            type: type,
-        }
+      page: {
+        type: type,
+      },
     });
   }, [conversation]);
 
@@ -109,6 +109,9 @@ export default function ConversationsList() {
         {userConversations.length > 0 &&
           userConversations.map((conv) => (
             <Button
+              component="a"
+              rel="noopener noreferrer"
+              href={`/conversation/${conv.id}`}
               variant={conversation == conv.id ? "filled" : "subtle"}
               key={conv.id}
               w="100%"

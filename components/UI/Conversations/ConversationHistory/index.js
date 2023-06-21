@@ -101,16 +101,16 @@ export function ConversationHistory(props) {
       <ShowHistory
         history={history}
         setHistory={setHistory}
-        user_id={userDetails.user_id}
-        document_id={userDetails.document}
+        user_id={userDetails?.user_id}
+        document_id={userDetails?.document}
         conv_id={conv_id}
         addResponse={addResponse}
         processing={processing}
         setProcessing={setProcessing}
       />
       <RequestForm
-        user_id={userDetails.user_id}
-        document_id={userDetails.document}
+        user_id={userDetails?.user_id}
+        document_id={userDetails?.document}
         conv_id={conv_id}
         addResponse={addResponse}
         processing={processing}

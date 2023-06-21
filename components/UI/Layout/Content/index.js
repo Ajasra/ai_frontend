@@ -16,21 +16,12 @@ export function Content() {
   return (
     <Container>
       {userDetails?.user_id == null && <SignUpPage />}
-      {userDetails?.page.type === "admin" && <AdminContent />}
-      {userDetails?.page.type !== "conversation" &&
-          userDetails?.page.type !== "admin" && (
-          <>
-            <DocumentListPage />
-            <ConversationsListPage />
-          </>
-        )}
-      {userDetails?.page.type === "conversation" &&
-          (userDetails?.conversation != null || userDetails?.document != null) && (
-          <>
-            <ConversationPage />
-          </>
-        )}
-      {/*{userDetails != null && <RequestForm />}*/}
+      {userDetails?.user_id !== null && (
+        <>
+          <DocumentListPage />
+          <ConversationsListPage />
+        </>
+      )}
     </Container>
   );
 }

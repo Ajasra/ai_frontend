@@ -39,7 +39,11 @@ export function AdminPanelNav() {
     <>
       {tabs.map((tab) => (
         <Button
-          variant={userDetails.page == tab.id ? "filled" : "subtle"}
+          component="a"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`/admin/${tab.id}`}
+          variant={userDetails.page?.content == tab.id ? "filled" : "subtle"}
           key={tab.id}
           w="100%"
           onClick={() => {

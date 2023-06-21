@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { getDocumentListApi } from "../../../../utils/API/docs_api";
 import { Container, Select, Text, Title } from "@mantine/core";
+import {useRouter} from "next/router";
 
 export default function DocumentList() {
   const userDetails = useContext(UserContext);
@@ -11,6 +12,8 @@ export default function DocumentList() {
   const [document, setDocument] = useState(null);
   const [docName, setDocName] = useState(null);
   const [docSummary, setDocSummary] = useState(null);
+
+  const route = useRouter();
 
   async function parseDocuments() {
     if (userDetails.user_id != null) {
@@ -81,6 +84,7 @@ export default function DocumentList() {
         },
         conversation: null,
       });
+      route.push("/conversation/new");
     } else {
       setUserDetails({
         ...userDetails,

@@ -48,7 +48,12 @@ export default function UserInfo({ props }) {
                 {userDetails.email}
               </Text>
             </Box>
-            <Button onClick={() => Logout()}>Logout</Button>
+            <Button
+                component="a"
+                rel="noopener noreferrer"
+                href="/"
+                onClick={() => Logout()}
+            >Logout</Button>
           </Group>
         </>
       )}

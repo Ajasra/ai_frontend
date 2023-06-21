@@ -10,8 +10,8 @@ import {
 export default function DocumentListPage(props) {
   const userDetails = useContext(UserContext);
   const setUserDetails = useContext(UserDispatchContext);
-  
-  const { type = "my"} = props;
+
+  const { type = "my" } = props;
 
   const [documents, setDocuments] = useState([]);
 
@@ -50,10 +50,7 @@ export default function DocumentListPage(props) {
 
   return (
     <>
-      <Title>
-        {type === "my" ? "My documents" : "All documents"}
-
-      </Title>
+      <Title>{type === "my" ? "My documents" : "All documents"}</Title>
       <Accordion>
         {documents.map((doc) => (
           <Accordion.Item value={doc.id} key={doc.id}>
@@ -64,6 +61,9 @@ export default function DocumentListPage(props) {
               <Divider variant="solid" />
               <Text>{doc.summary}</Text>
               <Button
+                component="a"
+                rel="noopener noreferrer"
+                href={`/conversation/new`}
                 mt={8}
                 onClick={() => {
                   SelectDocument(doc.id);

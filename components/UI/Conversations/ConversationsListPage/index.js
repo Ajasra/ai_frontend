@@ -75,6 +75,9 @@ export default function ConversationsListPage() {
               </Accordion.Control>
               <Accordion.Panel>
                 <Button
+                  component="a"
+                  rel="noopener noreferrer"
+                  href={`/conversation/${conv.id}`}
                   mt={8}
                   onClick={() => {
                     setConversation(conv.id);

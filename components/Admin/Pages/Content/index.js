@@ -9,10 +9,10 @@ export function AdminContent() {
 	
 	return (
 		<>
-			{
-				userDetails?.page.content === "documents" &&
-				<DocumentListPage type="all" />
-			}
+			{/*{*/}
+			{/*	userDetails?.page.content === "documents" &&*/}
+			{/*	<DocumentListPage type="all" />*/}
+			{/*}*/}
 		</>
 	);
 }

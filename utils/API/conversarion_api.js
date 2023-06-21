@@ -204,6 +204,7 @@ export async function createConversationApi(user_id, doc_id, title) {
     user_id: user_id,
     doc_id: doc_id,
     title: title,
+    api_key: api_key,
   });
 
   const requestOptions = {

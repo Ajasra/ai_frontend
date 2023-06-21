@@ -1,7 +1,7 @@
-import { Button, Container, Group, Input, Title, Tooltip } from "@mantine/core";
+import { Button, Group, Input, Tooltip } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import {
-  deleteConversationAPI, updateConverationActiveAPI,
+  updateConverationActiveAPI,
   updateConversationTitleAPI,
 } from "../../../../utils/API/conversarion_api";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
@@ -51,6 +51,7 @@ export default function ConversationTitle(props) {
           action: "updateConversations",
         });
       }
+
       ShowSuccess("Conversation deleted");
     } else {
       ShowError("Error deleting conversation");
@@ -65,7 +66,7 @@ export default function ConversationTitle(props) {
       action: "closeConversation",
       page: {
         type: null,
-      }
+      },
     });
   }
 
@@ -107,12 +108,24 @@ export default function ConversationTitle(props) {
             </Button>
           </>
         )}
-        <Button onClick={deleteConversation} variant="Unstyled">
+        <Button
+          component="a"
+          rel="noopener noreferrer"
+          href="/"
+          onClick={deleteConversation}
+          variant="Unstyled"
+        >
           <Tooltip label="Delete conversation">
             <CrumpledPaperIcon />
           </Tooltip>
         </Button>
-        <Button onClick={closeConversation} variant="Unstyled">
+        <Button
+          component="a"
+          rel="noopener noreferrer"
+          href="/"
+          onClick={closeConversation}
+          variant="Unstyled"
+        >
           <Tooltip label="Close conversation">
             <Cross1Icon />
           </Tooltip>

@@ -12,14 +12,18 @@ import {
   MarkHistoryApi,
 } from "../../../../utils/API/conversarion_api";
 import { getRandomIntSeed } from "../../../../utils/functions";
-import {ShowError, ShowInfo, ShowSuccess} from "../../../../utils/Notifications/nt_show";
+import {
+  ShowError,
+  ShowInfo,
+  ShowSuccess,
+} from "../../../../utils/Notifications/nt_show";
 import ReactMarkdown from "react-markdown";
-import {CircleBackslashIcon, Cross1Icon} from "@radix-ui/react-icons";
+import { CircleBackslashIcon, Cross1Icon } from "@radix-ui/react-icons";
 
 export function ShowHistory(props) {
   const {
     history,
-      setHistory,
+    setHistory,
     addResponse,
     user_id,
     document_id,
@@ -53,22 +57,18 @@ export function ShowHistory(props) {
     const json = await MarkHistoryApi(hist_id, 1 - feedback);
     if (json["code"] == 200) {
       ShowSuccess("Success", "Answer marked as bad");
-    //   change feedback for the history with this id in the list
-        let newHistory = history.map((item) => {
-            if (item.id == hist_id) {
-                item.feedback = 1 - feedback;
-            }
-            return item;
-        })
-        setHistory(newHistory);
-
-
+      //   change feedback for the history with this id in the list
+      let newHistory = history.map((item) => {
+        if (item.id == hist_id) {
+          item.feedback = 1 - feedback;
+        }
+        return item;
+      });
+      setHistory(newHistory);
     } else {
       ShowError("Error", "Could not mark answer as bad");
     }
   }
-
-  console.log(history);
 
   return (
     <>
@@ -86,7 +86,7 @@ export function ShowHistory(props) {
             <Tooltip label="Bad answer" className="mark-answer">
               <Button
                 variant="outline"
-                color={item.feedback ? "red": "blue"}
+                color={item.feedback ? "red" : "blue"}
                 onClick={() => {
                   MarkAnswer(item.id, item.feedback);
                 }}

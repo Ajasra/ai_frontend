@@ -49,7 +49,7 @@ export function ConversationHistory(props) {
 
   function SourcesToArray(sources) {
     let result = [];
-    if (sources != null) {
+    if (sources != null && sources != "" && sources != "None" && sources != "[]") {
       result = JSON.parse(sources);
     }
     return result;

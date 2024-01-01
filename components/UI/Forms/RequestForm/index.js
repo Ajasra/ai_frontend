@@ -2,7 +2,7 @@ import {Button, Container, Input, Loader, Text, Title} from "@mantine/core";
 import { useContext, useState } from "react";
 import {
   createConversationApi,
-  getApiResponse,
+  getApiResponse, getSimpleApiResponse,
 } from "../../../../utils/API/conversarion_api";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import {ShowError, ShowInfo} from "../../../../utils/Notifications/nt_show";
@@ -49,13 +49,21 @@ export default function RequestForm(props) {
 
       setProcessing(true);
       ShowInfo("Please wait", "Getting response...");
-      const json = await getApiResponse(
-        question,
-        user_id,
-        document_id,
-        conv_id
-      );
-      console.log(json)
+      let json;
+      if (document_id == null || document_id == "None") {
+        json = await getSimpleApiResponse(
+            question,
+            user_id,
+            conv_id
+        )
+      }else{
+        json = await getApiResponse(
+            question,
+            user_id,
+            document_id,
+            conv_id
+        );
+      }
       if (json["response"]["status"] == "success") {
         addResponse(question, json["response"]);
         // setConversationId(json["response"]["data"]["conversation_id"]);

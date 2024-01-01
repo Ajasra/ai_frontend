@@ -25,7 +25,7 @@ export function ConversationPage() {
   }
 
   useEffect(() => {
-    if (userDetails?.document != null) {
+    if (userDetails?.document != null && userDetails?.document != "None") {
       // get document name and summary by id form the userDetails.documents
       const doc = userDetails.documents.filter(
         (doc) => doc.id == userDetails.document
@@ -38,7 +38,15 @@ export function ConversationPage() {
         });
       }else{
         setDocument(null);
+        setUserDetails({
+          ...userDetails,
+            document: null,
+        });
       }
+    }else if (userDetails?.document == "None"){
+        setDocument(null);
+    }else{
+      setDocument("");
     }
   }, [userDetails?.document]);
 

@@ -1,6 +1,35 @@
 const backend_api = process.env.NEXT_PUBLIC_BACKEND_URL;
 const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
+
+export async function getSimpleApiResponse(prompt, user_id, conv_id) {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    const raw = JSON.stringify({
+        user_message: prompt,
+        conversation_id: conv_id,
+        user_id: user_id,
+        api_key: api_key,
+    });
+    
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+    };
+    const api_url = `${backend_api}/conv/get_response`;
+    
+    try {
+        const response = await fetch(api_url, requestOptions);
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+}
+
 export async function getApiResponse(prompt, user_id, document_id, conv_id) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");

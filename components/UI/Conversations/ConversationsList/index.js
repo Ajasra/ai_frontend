@@ -1,7 +1,11 @@
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { Button } from "@mantine/core";
-import { getConversationsListApi } from "../../../../utils/API/conversarion_api";
+import {
+  createConversationApi,
+  getConversationsListApi,
+} from "../../../../utils/API/conversarion_api";
+import { IconLayoutGridAdd } from "@tabler/icons-react";
 
 export default function ConversationsList() {
   const userDetails = useContext(UserContext);
@@ -33,15 +37,15 @@ export default function ConversationsList() {
   async function createNewConversation() {
     // TODO: create new conversation
     if (userDetails.user_id != null) {
-      let cur_doc = 0;
-      if (userDetails.document != null) {
-        cur_doc = userDetails.document;
-      } else {
-        // TODO: do not allow create conversation without document
-        // alert('Select a document to create a conversation')
-        // console.log('Select a document to create a conversation')
-      }
-      console.log(cur_doc);
+      const conv = await createConversationApi(
+        userDetails.user_id,
+        null,
+        "New conversation"
+      );
+      setUserDetails({
+        ...userDetails,
+        action: "updateConversations",
+      });
     }
   }
 
@@ -123,9 +127,9 @@ export default function ConversationsList() {
             </Button>
           ))}
       </div>
-      {/*<Button onClick={createNewConversation} variant="unstyled">*/}
-      {/*  <IconLayoutGridAdd size={24} />*/}
-      {/*</Button>*/}
+      <Button onClick={createNewConversation} variant="unstyled">
+        <IconLayoutGridAdd size={24} /> &nbsp; New conversation
+      </Button>
     </>
   );
 }

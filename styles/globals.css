@@ -17,7 +17,7 @@ a {
 
 .mark-answer {
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
   padding: 0.5rem;
   opacity: 0.3;
@@ -31,6 +31,10 @@ a {
   border-radius: 0.5rem;
   background: rgba(0, 94, 94, 0.3);
   margin-left: 3em;
+}
+
+.answer-prompt {
+  margin-right: 3em;
 }
 
 @media (prefers-color-scheme: dark) {

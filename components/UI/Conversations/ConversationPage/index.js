@@ -30,22 +30,22 @@ export function ConversationPage() {
       const doc = userDetails.documents.filter(
         (doc) => doc.id == userDetails.document
       );
-      if(doc.length > 0) {
+      if (doc.length > 0) {
         setDocument(doc[0]);
         setConversation({
           title: "New: " + doc[0].name.split(".")[0],
           id: null,
         });
-      }else{
+      } else {
         setDocument(null);
         setUserDetails({
           ...userDetails,
-            document: null,
+          document: null,
         });
       }
-    }else if (userDetails?.document == "None"){
-        setDocument(null);
-    }else{
+    } else if (userDetails?.document == "None") {
+      setDocument(null);
+    } else {
       setDocument("");
     }
   }, [userDetails?.document]);
@@ -58,6 +58,8 @@ export function ConversationPage() {
         setConversation({
           title: json["response"]["title"],
           id: json["response"]["conv_id"],
+          model: json["response"]["model"],
+          summary: json["response"]["summary"],
         });
       }
     }
@@ -66,6 +68,8 @@ export function ConversationPage() {
   useEffect(() => {
     getConversation(userDetails?.conversation);
   }, [userDetails?.conversation]);
+  
+  console.log(conversation);
 
   return (
     <>
@@ -75,13 +79,25 @@ export function ConversationPage() {
         updateConversation={getConversation}
       />
       <Divider mt={32} />
-      <Accordion label="Document">
+      {document !== null && (
+        <Accordion label="Document">
+          <Accordion.Item value="document_name">
+            <Accordion.Control>
+              <Title order={4}>{document?.name}</Title>
+            </Accordion.Control>
+            <Accordion.Panel>
+              <Text>{document?.summary}</Text>
+            </Accordion.Panel>
+          </Accordion.Item>
+        </Accordion>
+      )}
+      <Accordion label="Settings">
         <Accordion.Item value="document_name">
           <Accordion.Control>
-            <Title order={4}>{document?.name}</Title>
+            <Title order={4}>Conversation settings</Title>
           </Accordion.Control>
           <Accordion.Panel>
-            <Text>{document?.summary}</Text>
+          
           </Accordion.Panel>
         </Accordion.Item>
       </Accordion>

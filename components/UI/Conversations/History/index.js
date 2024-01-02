@@ -80,9 +80,12 @@ export function ShowHistory(props) {
             mt={32}
             style={{ position: "relative" }}
           >
-            <Title order={3} color="blue.6">
-              {item.question}
-            </Title>
+            <Container className="question-prompt">
+              <Text order={3}>
+                <ReactMarkdown>{item.question}</ReactMarkdown>
+              </Text>
+            </Container>
+
             <Tooltip label="Bad answer" className="mark-answer">
               <Button
                 variant="outline"
@@ -97,7 +100,7 @@ export function ShowHistory(props) {
             <Text>
               <ReactMarkdown>{item.answer}</ReactMarkdown>
             </Text>
-            {item.followup.length > 0 && (
+            {(item.followup.length > 0 && item.followup !== "") && (
               <Container>
                 <Title order={5} mt={16}>
                   Follow up questions:

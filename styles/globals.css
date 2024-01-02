@@ -26,6 +26,13 @@ a {
   opacity: 1;
 }
 
+.question-prompt {
+  border: #005e5e 1px solid;
+  border-radius: 0.5rem;
+  background: rgba(0, 94, 94, 0.3);
+  margin-left: 3em;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

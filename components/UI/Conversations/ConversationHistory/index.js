@@ -8,7 +8,7 @@ import { getConversationHistory } from "../../../../utils/API/conversarion_api";
 import { ShowError } from "../../../../utils/Notifications/nt_show";
 
 function splitString(str) {
-  if (str == null) {
+  if (str == null || str == "" || str == "None" || str == "[]") {
     return [];
   } else {
     return str.split("\n");
@@ -62,8 +62,6 @@ export function ConversationHistory(props) {
       let hist = [];
       // reverse the order of the history
       const resp = json["response"].reverse();
-
-      console.log(resp);
 
       resp?.map((item) => {
         hist.push({

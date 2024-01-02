@@ -1,4 +1,4 @@
-import {Button, Container, Input, Loader, Text, Title} from "@mantine/core";
+import {Button, Container, Input, Loader, Text, Textarea, Title} from "@mantine/core";
 import { useContext, useState } from "react";
 import {
   createConversationApi,
@@ -84,7 +84,7 @@ export default function RequestForm(props) {
   return (
     <Container mt={32}>
       <Title order={3}>Ask a question</Title>
-      <Input
+      <Textarea
         label="Your question"
         placeholder="What is the meaning of life?"
         required

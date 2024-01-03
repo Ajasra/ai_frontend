@@ -171,6 +171,36 @@ export async function updateConverationActiveAPI(conv_id, active) {
   }
 }
 
+
+export async function updateConversationModelAPI(conv_id, model_id) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const raw = JSON.stringify({
+    conv_id: conv_id,
+    model: model_id,
+    api_key: api_key,
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  const api_url = `${backend_api}/conv/update`;
+
+
+  try {
+    const response = await fetch(api_url, requestOptions);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+}
+
 export async function deleteConversationAPI(conv_id) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");

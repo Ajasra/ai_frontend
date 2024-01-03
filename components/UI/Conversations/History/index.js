@@ -8,8 +8,8 @@ import {
   Tooltip,
 } from "@mantine/core";
 import {
-  getApiResponse,
-  MarkHistoryApi,
+  responseGetDocAPI,
+  historyUpdateFeedbackAPI,
 } from "../../../../utils/API/conversarion_api";
 import { getRandomIntSeed } from "../../../../utils/functions";
 import {
@@ -39,7 +39,7 @@ export function ShowHistory(props) {
     if (continueRequest) {
       setProcessing(true);
       ShowInfo("Please wait", "Getting response...");
-      const json = await getApiResponse(
+      const json = await responseGetDocAPI(
         question,
         user_id,
         document_id,
@@ -55,7 +55,7 @@ export function ShowHistory(props) {
   }
 
   async function MarkAnswer(hist_id, feedback) {
-    const json = await MarkHistoryApi(hist_id, 1 - feedback);
+    const json = await historyUpdateFeedbackAPI(hist_id, 1 - feedback);
     if (json["code"] == 200) {
       ShowSuccess("Success", "Answer marked as bad");
       //   change feedback for the history with this id in the list

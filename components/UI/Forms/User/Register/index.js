@@ -4,7 +4,7 @@ import { LockClosedIcon, PersonIcon } from "@radix-ui/react-icons";
 import { UserDispatchContext } from "../../../../User/UserContext";
 
 import styles from "../../../../../styles/LoginForm.module.css";
-import { registerUser } from "../../../../../utils/API/user_api";
+import { userRegisterAPI } from "../../../../../utils/API/user_api";
 import { IconMail } from "@tabler/icons-react";
 import {ShowError, ShowSuccess} from "../../../../../utils/Notifications/nt_show";
 
@@ -86,7 +86,7 @@ export function RegisterForm() {
   async function Register() {
     if (proceed) {
       console.log("registering");
-      registerUser(email, name, password).then((json) => {
+      userRegisterAPI(email, name, password).then((json) => {
         console.log(json);
         if (json["code"] == "200") {
           setUserDetails({

@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../../User/UserContext";
 
 import styles from "../../../../../styles/LoginForm.module.css";
-import { loginUser } from "../../../../../utils/API/user_api";
+import { userLoginAPI } from "../../../../../utils/API/user_api";
 import { IconMail } from "@tabler/icons-react";
 import { ShowError } from "../../../../../utils/Notifications/nt_show";
 
@@ -60,7 +60,7 @@ export default function LoginForm(props) {
 
   async function Login() {
     if (proceed) {
-      const json = await loginUser(name, password);
+      const json = await userLoginAPI(name, password);
       console.log(json)
       if (json["code"] == "200") {
         setUserDetails({

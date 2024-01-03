@@ -1,7 +1,7 @@
 import { Accordion, Button, Title } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
-import { updateConverationActiveAPI } from "../../../../utils/API/conversarion_api";
+import { conversationUpdateActiveAPI } from "../../../../utils/API/conversarion_api";
 import {
   ShowError,
   ShowSuccess,
@@ -15,7 +15,7 @@ export default function ConversationsListPage() {
   const [conversation, setConversation] = useState(null);
 
   async function deleteConversation(conv_id) {
-    const json = await updateConverationActiveAPI(conv_id, 0);
+    const json = await conversationUpdateActiveAPI(conv_id, 0);
     if (json["code"] == "200") {
       if (json["response"] == true) {
         // updateConversation(conversation.id);

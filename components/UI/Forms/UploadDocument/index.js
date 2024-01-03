@@ -8,7 +8,7 @@ import {
 } from "@mantine/core";
 import { useContext, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
-import { uploadDocumentApi } from "../../../../utils/API/docs_api";
+import { docUploadAPI } from "../../../../utils/API/docs_api";
 import {
   ShowError,
   ShowSuccess,
@@ -62,7 +62,7 @@ export function UploadDocument() {
       formData.append("force", true);
       formData.append("api_key", process.env.NEXT_PUBLIC_API_KEY);
 
-      const json = await uploadDocumentApi(formData);
+      const json = await docUploadAPI(formData);
       if (json["code"] == "200") {
         setUploading(false);
         setFile(null);

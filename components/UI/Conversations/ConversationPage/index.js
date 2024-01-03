@@ -11,8 +11,8 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { ConversationHistory } from "../ConversationHistory";
 import {
-  getConversationByIdApi,
-  updateConversationModelAPI,
+  conversationGetByIdAPI,
+  conversationUpdateModelAPI,
 } from "../../../../utils/API/conversarion_api";
 import ConversationTitle from "../ConvTitle";
 import ReactMarkdown from "react-markdown";
@@ -48,7 +48,7 @@ export function ConversationPage() {
   //fet conversation name by the conversdation id
   async function getConversation(conv_id) {
     if (conv_id != null) {
-      const json = await getConversationByIdApi(conv_id);
+      const json = await conversationGetByIdAPI(conv_id);
       if (json["code"] == "200") {
         setConversation({
           title: json["response"]["title"],
@@ -61,7 +61,7 @@ export function ConversationPage() {
   }
 
   async function updateConversationSettings() {
-    const json = await updateConversationModelAPI(conversation.id, model.value);
+    const json = await conversationUpdateModelAPI(conversation.id, model.value);
     if (json["code"] == "200") {
       showNotification({
         title: "Success",

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
-import { getDocumentListApi } from "../../../../utils/API/docs_api";
+import { docGetListAPI } from "../../../../utils/API/docs_api";
 import { Container, Select, Text, Title } from "@mantine/core";
 import {useRouter} from "next/router";
 
@@ -17,7 +17,7 @@ export default function DocumentList() {
 
   async function parseDocuments() {
     if (userDetails.user_id != null) {
-      const docs = await getDocumentListApi(userDetails.user_id);
+      const docs = await docGetListAPI(userDetails.user_id);
       if (docs["code"] == "200") {
         if (docs["response"].length > 0) {
           // setUserDocuments(docs["data"]);

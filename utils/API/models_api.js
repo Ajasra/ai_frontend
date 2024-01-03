@@ -1,9 +1,10 @@
+import {createHeaders} from "./api_helper";
+
 const backend_api = process.env.NEXT_PUBLIC_BACKEND_URL;
 const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
-export async function getModelsApi(conv_id) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+export async function modelGetAllAPI(conv_id) {
+  const myHeaders = createHeaders();
 
   const raw = JSON.stringify({
     api_key: api_key,

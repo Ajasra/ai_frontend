@@ -1,7 +1,7 @@
 import { Accordion, Button, Divider, Title, Text } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
-import { deleteDocumentApi } from "../../../../utils/API/docs_api";
+import { docDeleteAPI } from "../../../../utils/API/docs_api";
 import {
   ShowError,
   ShowSuccess,
@@ -27,7 +27,7 @@ export default function DocumentListPage(props) {
 
   async function DeleteDocument(doc_id) {
     console.log("Delete document " + doc_id);
-    const res = await deleteDocumentApi(doc_id);
+    const res = await docDeleteAPI(doc_id);
     if (res["code"] == "200") {
       console.log("Document deleted");
       setUserDetails({

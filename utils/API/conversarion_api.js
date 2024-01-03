@@ -1,39 +1,29 @@
+import {createHeaders, createRequestOptions} from "./api_helper";
+
 const backend_api = process.env.NEXT_PUBLIC_BACKEND_URL;
 const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
+export async function responseGetSimpleAPI(prompt, user_id, conv_id) {
+  const raw = JSON.stringify({
+    user_message: prompt,
+    conversation_id: conv_id,
+    user_id: user_id,
+    api_key: api_key,
+  });
 
-export async function getSimpleApiResponse(prompt, user_id, conv_id) {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    
-    const raw = JSON.stringify({
-        user_message: prompt,
-        conversation_id: conv_id,
-        user_id: user_id,
-        api_key: api_key,
-    });
-    
-    const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-    };
-    const api_url = `${backend_api}/conv/get_response`;
-    
-    try {
-        const response = await fetch(api_url, requestOptions);
-        return await response.json();
-    } catch (error) {
-        console.error(error);
-        return error;
-    }
+  const requestOptions = createRequestOptions("POST", raw);
+  const api_url = `${backend_api}/conv/get_response`;
+
+  try {
+    const response = await fetch(api_url, requestOptions);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
 }
 
-export async function getApiResponse(prompt, user_id, document_id, conv_id) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
+export async function responseGetDocAPI(prompt, user_id, document_id, conv_id) {
   const raw = JSON.stringify({
     user_message: prompt,
     document: document_id,
@@ -42,12 +32,7 @@ export async function getApiResponse(prompt, user_id, document_id, conv_id) {
     api_key: api_key,
   });
 
-  const requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
+  const requestOptions = createRequestOptions("POST", raw);
 
   const api_url = `${backend_api}/conv/get_response_doc`;
 
@@ -60,37 +45,8 @@ export async function getApiResponse(prompt, user_id, document_id, conv_id) {
   }
 }
 
-export async function getConversationHistory(conv_id) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
-  const raw = JSON.stringify({
-    conv_id: conv_id,
-    limit: 100,
-    api_key: api_key,
-  });
-
-  const requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
-
-  const api_url = `${backend_api}/conv/get_history`;
-
-  try {
-    const response = await fetch(api_url, requestOptions);
-    return await response.json();
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
-}
-
-export async function getConversationByIdApi(conv_id) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+export async function conversationGetByIdAPI(conv_id) {
+  const myHeaders = createHeaders();
 
   const raw = JSON.stringify({
     conv_id: conv_id,
@@ -115,9 +71,8 @@ export async function getConversationByIdApi(conv_id) {
   }
 }
 
-export async function updateConversationTitleAPI(conv_id, title) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+export async function conversationUpdateTitleAPI(conv_id, title) {
+  const myHeaders = createHeaders();
 
   const raw = JSON.stringify({
     conv_id: conv_id,
@@ -143,9 +98,8 @@ export async function updateConversationTitleAPI(conv_id, title) {
   }
 }
 
-export async function updateConverationActiveAPI(conv_id, active) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+export async function conversationUpdateActiveAPI(conv_id, active) {
+  const myHeaders = createHeaders();
 
   const raw = JSON.stringify({
     conv_id: conv_id,
@@ -171,10 +125,8 @@ export async function updateConverationActiveAPI(conv_id, active) {
   }
 }
 
-
-export async function updateConversationModelAPI(conv_id, model_id) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+export async function conversationUpdateModelAPI(conv_id, model_id) {
+  const myHeaders = createHeaders();
 
   const raw = JSON.stringify({
     conv_id: conv_id,
@@ -191,7 +143,6 @@ export async function updateConversationModelAPI(conv_id, model_id) {
 
   const api_url = `${backend_api}/conv/update`;
 
-
   try {
     const response = await fetch(api_url, requestOptions);
     return await response.json();
@@ -201,9 +152,8 @@ export async function updateConversationModelAPI(conv_id, model_id) {
   }
 }
 
-export async function deleteConversationAPI(conv_id) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+export async function conversationDeleteAPI(conv_id) {
+  const myHeaders = createHeaders();
 
   const raw = JSON.stringify({
     conv_id: conv_id,
@@ -228,9 +178,8 @@ export async function deleteConversationAPI(conv_id) {
   }
 }
 
-export async function getConversationsListApi(user_id) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+export async function conversationGetListAPI(user_id) {
+  const myHeaders = createHeaders();
 
   const raw = JSON.stringify({
     user_id: user_id,
@@ -255,9 +204,8 @@ export async function getConversationsListApi(user_id) {
   }
 }
 
-export async function createConversationApi(user_id, doc_id, title) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+export async function conversationCreateAPI(user_id, doc_id, title) {
+  const myHeaders = createHeaders();
 
   const raw = JSON.stringify({
     user_id: user_id,
@@ -284,9 +232,8 @@ export async function createConversationApi(user_id, doc_id, title) {
   }
 }
 
-export async function MarkHistoryApi(hist_id, feedback) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+export async function historyUpdateFeedbackAPI(hist_id, feedback) {
+  const myHeaders = createHeaders();
 
   const raw = JSON.stringify({
     hist_id: hist_id,
@@ -302,6 +249,33 @@ export async function MarkHistoryApi(hist_id, feedback) {
   };
 
   const api_url = `${backend_api}/conv/history/feedback`;
+
+  try {
+    const response = await fetch(api_url, requestOptions);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+}
+
+export async function historyGetByConversationAPI(conv_id) {
+  const myHeaders = createHeaders();
+
+  const raw = JSON.stringify({
+    conv_id: conv_id,
+    limit: 100,
+    api_key: api_key,
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  const api_url = `${backend_api}/conv/get_history`;
 
   try {
     const response = await fetch(api_url, requestOptions);

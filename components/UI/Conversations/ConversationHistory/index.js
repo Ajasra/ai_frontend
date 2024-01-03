@@ -3,8 +3,8 @@ import RequestForm from "../../Forms/RequestForm";
 import { useContext, useEffect, useState } from "react";
 import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { ShowHistory } from "../History";
-import { loginUser } from "../../../../utils/API/user_api";
-import { getConversationHistory } from "../../../../utils/API/conversarion_api";
+import { userLoginAPI } from "../../../../utils/API/user_api";
+import { historyGetByConversationAPI } from "../../../../utils/API/conversarion_api";
 import { ShowError } from "../../../../utils/Notifications/nt_show";
 
 function splitString(str) {
@@ -27,8 +27,6 @@ export function ConversationHistory(props) {
 
   function addResponse(question, response, error = false) {
     try {
-      console.log(response);
-
       let sources = response["data"]["source"];
 
       setHistory([
@@ -49,7 +47,12 @@ export function ConversationHistory(props) {
 
   function SourcesToArray(sources) {
     let result = [];
-    if (sources != null && sources != "" && sources != "None" && sources != "[]") {
+    if (
+      sources != null &&
+      sources != "" &&
+      sources != "None" &&
+      sources != "[]"
+    ) {
       result = JSON.parse(sources);
     }
     return result;
@@ -57,7 +60,7 @@ export function ConversationHistory(props) {
 
   async function getHistory(conv_id) {
     // get the conversation history
-    const json = await getConversationHistory(conv_id);
+    const json = await historyGetByConversationAPI(conv_id);
     if (json["code"] == "200") {
       let hist = [];
       // reverse the order of the history

@@ -2,8 +2,8 @@ import { UserContext, UserDispatchContext } from "../../../User/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { Button } from "@mantine/core";
 import {
-  createConversationApi,
-  getConversationsListApi,
+  conversationCreateAPI,
+  conversationGetListAPI,
 } from "../../../../utils/API/conversarion_api";
 import { IconLayoutGridAdd } from "@tabler/icons-react";
 
@@ -16,7 +16,7 @@ export default function ConversationsList() {
 
   async function parseConversations() {
     if (userDetails.user_id != null) {
-      const convs = await getConversationsListApi(userDetails.user_id);
+      const convs = await conversationGetListAPI(userDetails.user_id);
       if (convs["code"] == "200") {
         if (convs["response"].length > 0) {
           // setUserDocuments(docs["data"]);
@@ -37,15 +37,18 @@ export default function ConversationsList() {
   async function createNewConversation() {
     // TODO: create new conversation
     if (userDetails.user_id != null) {
-      const conv = await createConversationApi(
+      const conv = await conversationCreateAPI(
         userDetails.user_id,
         null,
         "New conversation"
       );
-      setUserDetails({
-        ...userDetails,
-        action: "updateConversations",
-      });
+      if(conv["code"] == "200"){
+        setConversation(conv["response"]);
+        setUserDetails({
+          ...userDetails,
+          action: "updateConversations",
+        });
+      }
     }
   }
 

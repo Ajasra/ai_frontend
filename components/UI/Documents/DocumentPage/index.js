@@ -57,31 +57,31 @@ export default function DocumentListPage(props) {
             <Accordion.Control>
               <Title order={4}>{doc.name}</Title>
             </Accordion.Control>
-            <Accordion.Panel>
-              <Divider variant="solid" />
-              <Text>{doc.summary}</Text>
-              <Button
-                component="a"
-                rel="noopener noreferrer"
-                href={`/conversation/new`}
-                mt={8}
-                onClick={() => {
-                  SelectDocument(doc.id);
-                }}
-              >
-                Select
-              </Button>
-              <Button
-                color="red"
-                variant="outline"
-                ml="2em"
-                onClick={() => {
-                  DeleteDocument(doc.id);
-                }}
-              >
-                Delete
-              </Button>
-            </Accordion.Panel>
+            {/*<Accordion.Panel>*/}
+            {/*  <Divider variant="solid" />*/}
+            {/*  <Text>{doc.summary}</Text>*/}
+            {/*  <Button*/}
+            {/*    component="a"*/}
+            {/*    rel="noopener noreferrer"*/}
+            {/*    href={`/conversation/new`}*/}
+            {/*    mt={8}*/}
+            {/*    onClick={() => {*/}
+            {/*      SelectDocument(doc.id);*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    Select*/}
+            {/*  </Button>*/}
+            {/*  <Button*/}
+            {/*    color="red"*/}
+            {/*    variant="outline"*/}
+            {/*    ml="2em"*/}
+            {/*    onClick={() => {*/}
+            {/*      DeleteDocument(doc.id);*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    Delete*/}
+            {/*  </Button>*/}
+            {/*</Accordion.Panel>*/}
           </Accordion.Item>
         ))}
       </Accordion>

@@ -197,7 +197,7 @@ export async function conversationGetListAPI(user_id) {
 
   try {
     const response = await fetch(api_url, requestOptions);
-    return await response.json();
+    return response.json();
   } catch (error) {
     console.error(error);
     return error;

@@ -143,36 +143,36 @@ export function ConversationPage() {
           <Accordion.Control>
             <Title order={4}>Conversation settings</Title>
           </Accordion.Control>
-          <Accordion.Panel>
-            <Flex>
-              <Container>
-                <Title order={5}>Model</Title>
-                <Select
-                  data={models}
-                  placeholder="Select model"
-                  defaultValue={model?.value}
-                  value={model?.value}
-                  onChange={(value) => {
-                    updateModel(value, setConversation, conversation, models);
-                  }}
-                />
-                <Text>
-                  <ReactMarkdown>{model?.description}</ReactMarkdown>
-                </Text>
-              </Container>
-              <Container>
-                <Title order={5}>Assistant</Title>
-                <Text>
-                  <ReactMarkdown>
-                    This is the assistant that will be used for this
-                    conversation. You can change the assistant by selecting a
-                    different model.
-                  </ReactMarkdown>
-                </Text>
-              </Container>
-            </Flex>
-            <Button onClick={updateConversationSettings}>Apply</Button>
-          </Accordion.Panel>
+          {/*<Accordion.Panel>*/}
+          {/*  <Flex>*/}
+          {/*    <Container>*/}
+          {/*      <Title order={5}>Model</Title>*/}
+          {/*      <Select*/}
+          {/*        data={models}*/}
+          {/*        placeholder="Select model"*/}
+          {/*        defaultValue={model?.value}*/}
+          {/*        value={model?.value}*/}
+          {/*        onChange={(value) => {*/}
+          {/*          updateModel(value, setConversation, conversation, models);*/}
+          {/*        }}*/}
+          {/*      />*/}
+          {/*      <Text>*/}
+          {/*        <ReactMarkdown>{model?.description}</ReactMarkdown>*/}
+          {/*      </Text>*/}
+          {/*    </Container>*/}
+          {/*    <Container>*/}
+          {/*      <Title order={5}>Assistant</Title>*/}
+          {/*      <Text>*/}
+          {/*        <ReactMarkdown>*/}
+          {/*          This is the assistant that will be used for this*/}
+          {/*          conversation. You can change the assistant by selecting a*/}
+          {/*          different model.*/}
+          {/*        </ReactMarkdown>*/}
+          {/*      </Text>*/}
+          {/*    </Container>*/}
+          {/*  </Flex>*/}
+          {/*  <Button onClick={updateConversationSettings}>Apply</Button>*/}
+          {/*</Accordion.Panel>*/}
         </Accordion.Item>
       </Accordion>
       <ConversationHistory

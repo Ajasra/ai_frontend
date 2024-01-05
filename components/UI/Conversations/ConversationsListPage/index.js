@@ -66,39 +66,39 @@ export default function ConversationsListPage() {
   return (
     <>
       <Title mt={32}>Your conversations</Title>
-      <Accordion>
-        {userConversations != null &&
-          userConversations.map((conv) => (
-            <Accordion.Item value={conv.id} key={conv.id}>
-              <Accordion.Control>
-                <Title order={4}>{conv.title}</Title>
-              </Accordion.Control>
-              <Accordion.Panel>
-                <Button
-                  component="a"
-                  rel="noopener noreferrer"
-                  href={`/conversation/${conv.id}`}
-                  mt={8}
-                  onClick={() => {
-                    setConversation(conv.id);
-                  }}
-                >
-                  Select
-                </Button>
-                <Button
-                  color="red"
-                  variant="outline"
-                  ml="2em"
-                  onClick={() => {
-                    deleteConversation(conv.id);
-                  }}
-                >
-                  Delete
-                </Button>
-              </Accordion.Panel>
-            </Accordion.Item>
-          ))}
-      </Accordion>
+      {/*<Accordion>*/}
+      {/*  {userConversations != null &&*/}
+      {/*    userConversations.map((conv) => (*/}
+      {/*      <Accordion.Item value={conv.id} key={conv.id}>*/}
+      {/*        <Accordion.Control>*/}
+      {/*          <Title order={4}>{conv.title}</Title>*/}
+      {/*        </Accordion.Control>*/}
+      {/*        /!*<Accordion.Panel>*!/*/}
+      {/*        /!*  <Button*!/*/}
+      {/*        /!*    component="a"*!/*/}
+      {/*        /!*    rel="noopener noreferrer"*!/*/}
+      {/*        /!*    href={`/conversation/${conv.id}`}*!/*/}
+      {/*        /!*    mt={8}*!/*/}
+      {/*        /!*    onClick={() => {*!/*/}
+      {/*        /!*      setConversation(conv.id);*!/*/}
+      {/*        /!*    }}*!/*/}
+      {/*        /!*  >*!/*/}
+      {/*        /!*    Select*!/*/}
+      {/*        /!*  </Button>*!/*/}
+      {/*        /!*  <Button*!/*/}
+      {/*        /!*    color="red"*!/*/}
+      {/*        /!*    variant="outline"*!/*/}
+      {/*        /!*    ml="2em"*!/*/}
+      {/*        /!*    onClick={() => {*!/*/}
+      {/*        /!*      deleteConversation(conv.id);*!/*/}
+      {/*        /!*    }}*!/*/}
+      {/*        /!*  >*!/*/}
+      {/*        /!*    Delete*!/*/}
+      {/*        /!*  </Button>*!/*/}
+      {/*        /!*</Accordion.Panel>*!/*/}
+      {/*      </Accordion.Item>*/}
+      {/*    ))}*/}
+      {/*</Accordion>*/}
     </>
   );
 }

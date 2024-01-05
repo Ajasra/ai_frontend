@@ -14,9 +14,12 @@ export default function ConversationsList() {
   const [userConversations, setUserConversations] = useState([]);
   const [conversation, setConversation] = useState(null);
 
+  console.log(userConversations)
+
   async function parseConversations() {
     if (userDetails.user_id != null) {
       const convs = await conversationGetListAPI(userDetails.user_id);
+      console.log(convs);
       if (convs["code"] == "200") {
         if (convs["response"].length > 0) {
           // setUserDocuments(docs["data"]);

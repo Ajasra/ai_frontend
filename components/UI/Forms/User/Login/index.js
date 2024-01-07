@@ -7,7 +7,11 @@ import { UserContext, UserDispatchContext } from "../../../../User/UserContext";
 import styles from "../../../../../styles/LoginForm.module.css";
 import { userLoginAPI } from "../../../../../utils/API/user_api";
 import { IconMail } from "@tabler/icons-react";
-import { ShowError } from "../../../../../utils/Notifications/nt_show";
+import {
+  ShowError,
+  ShowSuccess,
+} from "../../../../../utils/Notifications/nt_show";
+import { showNotification } from "@mantine/notifications";
 
 export default function LoginForm(props) {
   const [name, setName] = useState("");
@@ -61,21 +65,22 @@ export default function LoginForm(props) {
   async function Login() {
     if (proceed) {
       const json = await userLoginAPI(name, password);
-      console.log(json)
-      if (json["code"] == "200") {
+      if (json.code === 200) {
+        const user = json.response;
         setUserDetails({
-          ...userDetails,
-          action: null,
-          user_id: json["data"]["user_id"],
-          user_name: json["data"]["name"],
-          hash: json["data"]["password"],
-          email: json["data"]["email"],
-          user_role: json["data"]["role"],
+          type: "SET_USER",
+          payload: {
+            action: null,
+            user_id: user.user_id,
+            user_name: user.name,
+            hash: user.password,
+            email: user.email,
+            user_role: user.role,
+          },
         });
-        // setResponse(json['response']['message'])
+        ShowSuccess("Login", user.name + " logged in successfully");
       } else {
-        // setNameError(json["response"]);
-        ShowError("Login", json["response"]);
+        ShowError("Login", json.response);
       }
     }
   }

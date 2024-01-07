@@ -193,7 +193,7 @@ export async function conversationGetListAPI(user_id) {
     redirect: "follow",
   };
 
-  const api_url = `${backend_api}/conv/get_user_conversations`;
+  const api_url = `${backend_api}/conv/get`;
 
   try {
     const response = await fetch(api_url, requestOptions);
@@ -221,7 +221,7 @@ export async function conversationCreateAPI(user_id, doc_id, title) {
     redirect: "follow",
   };
 
-  const api_url = `${backend_api}/conv/create`;
+  const api_url = `${backend_api}/conv/add`;
 
   try {
     const response = await fetch(api_url, requestOptions);

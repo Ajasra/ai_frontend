@@ -12,51 +12,38 @@ import { UserContext, UserDispatchContext } from "../../User/UserContext";
 export default function UserInfo({ props }) {
   const theme = useMantineTheme();
 
-  const userDetails = useContext(UserContext);
+  const {user} = useContext(UserContext);
   const setUserDetails = useContext(UserDispatchContext);
 
   function Logout() {
     setUserDetails({
-      ...userDetails,
-      user_email: null,
-      action: null,
-      documents: null,
-      email: null,
-      userConversations: null,
-      user_id: null,
-      user_name: null,
-      user_role: null,
-      hash: null,
+      type: "RESET_USER",
     });
-    localStorage.removeItem("user");
   }
 
   return (
-    <Box mt={16}>
-      {userDetails?.user_id != null && (
-        <>
-          <Group>
-            {/*<Avatar*/}
-            {/*  src="/user.jpg"*/}
-            {/*  radius="xl"*/}
-            {/*/>*/}
-            <Box sx={{ flex: 1 }}>
-              <Text size="sm" weight={500}>
-                {userDetails.user_name}
-              </Text>
-              <Text color="dimmed" size="xs">
-                {userDetails.email}
-              </Text>
-            </Box>
-            <Button
-                component="a"
-                rel="noopener noreferrer"
-                href="/"
-                onClick={() => Logout()}
-            >Logout</Button>
-          </Group>
-        </>
-      )}
-    </Box>
+    user?.user_id && (
+      <Box mt={16}>
+        <Group>
+          <Avatar src="/user.jpg" radius="xl" />
+          <Box sx={{ flex: 1 }}>
+            <Text size="sm" weight={500}>
+              {user.user_name}
+            </Text>
+            <Text color="dimmed" size="xs">
+              {user.email}
+            </Text>
+          </Box>
+          <Button
+            component="a"
+            rel="noopener noreferrer"
+            href="/"
+            onClick={() => Logout()}
+          >
+            Logout
+          </Button>
+        </Group>
+      </Box>
+    )
   );
 }

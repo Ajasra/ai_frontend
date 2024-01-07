@@ -21,16 +21,16 @@ export function RegisterForm() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
 
-  const setUserDetails = useContext(UserDispatchContext);
+  // const setUserDetails = useContext(UserDispatchContext);
   const userDetails = useContext(UserDispatchContext);
 
   const [proceed, setProceed] = useState(false);
 
   function Login() {
-    setUserDetails({
-      ...userDetails,
-      action: null,
-    });
+    // setUserDetails({
+    //   ...userDetails,
+    //   action: null,
+    // });
   }
 
   function UpdateName(newName) {
@@ -89,11 +89,11 @@ export function RegisterForm() {
       userRegisterAPI(email, name, password).then((json) => {
         console.log(json);
         if (json["code"] == "200") {
-          setUserDetails({
-            ...userDetails,
-            user_email: email,
-            action: null,
-          });
+          // setUserDetails({
+          //   ...userDetails,
+          //   user_email: email,
+          //   action: null,
+          // });
           ShowSuccess("Registration successful", "You can now login");
         } else {
           ShowError("Registration failed", json["response"]);

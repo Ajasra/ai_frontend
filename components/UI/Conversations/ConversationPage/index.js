@@ -25,7 +25,7 @@ import {
 
 export function ConversationPage() {
   const userDetails = useContext(UserContext);
-  const setUserDetails = useContext(UserDispatchContext);
+  // const setUserDetails = useContext(UserDispatchContext);
 
   const [document, setDocument] = useState(null);
   const [conversation, setConversation] = useState(null);
@@ -38,11 +38,11 @@ export function ConversationPage() {
       ...conversation,
       id: conv_id,
     });
-    setUserDetails({
-      ...userDetails,
-      conversation: conv_id,
-      action: "updateConversations",
-    });
+    // setUserDetails({
+    //   ...userDetails,
+    //   conversation: conv_id,
+    //   action: "updateConversations",
+    // });
   }
 
   //fet conversation name by the conversdation id
@@ -106,10 +106,10 @@ export function ConversationPage() {
         });
       } else {
         setDocument(null);
-        setUserDetails({
-          ...userDetails,
-          document: null,
-        });
+        // setUserDetails({
+        //   ...userDetails,
+        //   document: null,
+        // });
       }
     } else if (userDetails?.document == "None") {
       setDocument(null);

@@ -9,7 +9,7 @@ import {
 
 export default function ConversationsListPage() {
   const userDetails = useContext(UserContext);
-  const setUserDetails = useContext(UserDispatchContext);
+  // const setUserDetails = useContext(UserDispatchContext);
 
   const [userConversations, setUserConversations] = useState([]);
   const [conversation, setConversation] = useState(null);
@@ -19,12 +19,12 @@ export default function ConversationsListPage() {
     if (json["code"] == "200") {
       if (json["response"] == true) {
         // updateConversation(conversation.id);
-        setUserDetails({
-          ...userDetails,
-          conversation: null,
-          document: null,
-          action: "updateConversations",
-        });
+        // setUserDetails({
+        //   ...userDetails,
+        //   conversation: null,
+        //   document: null,
+        //   action: "updateConversations",
+        // });
       }
       ShowSuccess("Conversation deleted");
     } else {
@@ -47,14 +47,14 @@ export default function ConversationsListPage() {
     if (conversation == null) {
       type = null;
     }
-    setUserDetails({
-      ...userDetails,
-      conversation: conversation,
-      document: getDocumentId(),
-      page: {
-        type: type,
-      },
-    });
+    // setUserDetails({
+    //   ...userDetails,
+    //   conversation: conversation,
+    //   document: getDocumentId(),
+    //   page: {
+    //     type: type,
+    //   },
+    // });
   }, [conversation]);
 
   useEffect(() => {

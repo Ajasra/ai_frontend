@@ -23,16 +23,16 @@ const tabs = [
 
 export function AdminPanelNav() {
   const userDetails = useContext(UserContext);
-  const setUserDetails = useContext(UserDispatchContext);
+  // const setUserDetails = useContext(UserDispatchContext);
 
   function SelectTab(tab) {
-    setUserDetails({
-      ...userDetails,
-      page: {
-        type: "admin",
-        content: tab,
-      },
-    });
+    // setUserDetails({
+    //   ...userDetails,
+    //   page: {
+    //     type: "admin",
+    //     content: tab,
+    //   },
+    // });
   }
 
   return (

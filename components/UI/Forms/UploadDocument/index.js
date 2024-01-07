@@ -20,7 +20,7 @@ export function UploadDocument() {
   const [fileError, setFileError] = useState(null);
 
   const userDetails = useContext(UserContext);
-  const setUserDetails = useContext(UserDispatchContext);
+  // const setUserDetails = useContext(UserDispatchContext);
 
   const [uploading, setUploading] = useState(false);
 
@@ -67,10 +67,10 @@ export function UploadDocument() {
         setUploading(false);
         setFile(null);
         ShowSuccess("File uploaded successfully", file.name);
-        setUserDetails({
-          ...userDetails,
-          action: "updateDocuments",
-        });
+        // setUserDetails({
+        //   ...userDetails,
+        //   action: "updateDocuments",
+        // });
       } else {
         if (json["result"]["message"] != null) {
           ShowError("Upload failed", json["result"]["message"]);

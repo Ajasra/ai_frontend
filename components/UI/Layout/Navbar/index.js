@@ -13,11 +13,11 @@ import {AdminPanelNav} from "../../../Admin/Panel";
 
 export default function AppNavbar(props) {
   const { opened, setOpened } = props;
-  const userDetails = useContext(UserContext);
+  const {user} = useContext(UserContext);
 
   return (
     <>
-      {userDetails?.user_id && (
+      {user?.user_id && (
         <Navbar
           hiddenBreakpoint="md"
           hidden={!opened}
@@ -32,7 +32,7 @@ export default function AppNavbar(props) {
               disableChevronRotation
               defaultValue="conversations"
             >
-              {userDetails?.user_id && (
+              {user?.user_id && (
                 <>
                   <Accordion.Item value="documents">
                     <Accordion.Control icon={<IconFolder size={rem(20)} />}>
@@ -63,7 +63,7 @@ export default function AppNavbar(props) {
                       <UserInfo />
                     </Accordion.Panel>
                   </Accordion.Item>
-                  {userDetails.user_role == 10 && (
+                  {user.user_role == 10 && (
                     <Accordion.Item value="admin">
                       <Accordion.Control
                         icon={<IconMessageChatbot size={rem(20)} />}

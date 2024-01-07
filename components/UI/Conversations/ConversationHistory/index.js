@@ -19,7 +19,7 @@ export function ConversationHistory(props) {
   const { conversation, setConv } = props;
 
   const userDetails = useContext(UserContext);
-  const setUserDetails = useContext(UserDispatchContext);
+  // const setUserDetails = useContext(UserDispatchContext);
 
   const [history, setHistory] = useState([]);
   const [conv_id, setConv_id] = useState(null);
@@ -90,10 +90,10 @@ export function ConversationHistory(props) {
     } else {
       setConv_id(null);
       setHistory([]);
-      setUserDetails({
-        ...userDetails,
-        conversation: null,
-      });
+      // setUserDetails({
+      //   ...userDetails,
+      //   conversation: null,
+      // });
     }
   }, [userDetails?.conversation]);
 

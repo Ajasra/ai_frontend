@@ -5,7 +5,7 @@ import DocumentListPage from "../../../UI/Documents/DocumentPage";
 export function AdminContent() {
 	
 	const userDetails = useContext(UserContext);
-	const setUserDetails = useContext(UserDispatchContext);
+	// const setUserDetails = useContext(UserDispatchContext);
 	
 	return (
 		<>

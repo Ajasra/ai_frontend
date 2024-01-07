@@ -36,7 +36,7 @@ export async function docGetListAPI(user_id) {
     redirect: "follow",
   };
 
-  const api_url = `${backend_api}/docs/get_docs/user_id`;
+  const api_url = `${backend_api}/docs/get`;
 
   try {
     const response = await fetch(api_url, requestOptions);

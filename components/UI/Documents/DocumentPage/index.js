@@ -8,7 +8,7 @@ import {
 } from "../../../../utils/Notifications/nt_show";
 
 export default function DocumentListPage(props) {
-  const userDetails = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const setUserDetails = useContext(UserDispatchContext);
 
   const { type = "my" } = props;
@@ -17,11 +17,14 @@ export default function DocumentListPage(props) {
 
   function SelectDocument(doc_id) {
     setUserDetails({
-      ...userDetails,
-      document: doc_id,
-      page: {
-        type: "conversation",
-      },
+      type: 'SET_USER',
+      payload: {
+        ...user,
+        document: doc_id,
+        page: {
+          type: "conversation",
+        },
+      }
     });
   }
 
@@ -31,8 +34,11 @@ export default function DocumentListPage(props) {
     if (res["code"] == "200") {
       console.log("Document deleted");
       setUserDetails({
-        ...userDetails,
-        action: "updateDocuments",
+        type: 'SET_USER',
+        payload: {
+          ...user,
+          action: "updateDocuments",
+        }
       });
       ShowSuccess("Document deleted");
     } else {
@@ -41,12 +47,12 @@ export default function DocumentListPage(props) {
   }
 
   useEffect(() => {
-    if (userDetails != null) {
-      if (userDetails.documents != null) {
-        setDocuments(userDetails.documents);
+    if (user != null) {
+      if (user.documents != null) {
+        setDocuments(user.documents);
       }
     }
-  }, [userDetails?.documents]);
+  }, [user?.documents]);
 
   return (
     <>
@@ -57,31 +63,31 @@ export default function DocumentListPage(props) {
             <Accordion.Control>
               <Title order={4}>{doc.name}</Title>
             </Accordion.Control>
-            {/*<Accordion.Panel>*/}
-            {/*  <Divider variant="solid" />*/}
-            {/*  <Text>{doc.summary}</Text>*/}
-            {/*  <Button*/}
-            {/*    component="a"*/}
-            {/*    rel="noopener noreferrer"*/}
-            {/*    href={`/conversation/new`}*/}
-            {/*    mt={8}*/}
-            {/*    onClick={() => {*/}
-            {/*      SelectDocument(doc.id);*/}
-            {/*    }}*/}
-            {/*  >*/}
-            {/*    Select*/}
-            {/*  </Button>*/}
-            {/*  <Button*/}
-            {/*    color="red"*/}
-            {/*    variant="outline"*/}
-            {/*    ml="2em"*/}
-            {/*    onClick={() => {*/}
-            {/*      DeleteDocument(doc.id);*/}
-            {/*    }}*/}
-            {/*  >*/}
-            {/*    Delete*/}
-            {/*  </Button>*/}
-            {/*</Accordion.Panel>*/}
+            <Accordion.Panel>
+              <Divider variant="solid" />
+              <Text>{doc.summary}</Text>
+              <Button
+                component="a"
+                rel="noopener noreferrer"
+                href={`/conversation/new`}
+                mt={8}
+                onClick={() => {
+                  SelectDocument(doc.id);
+                }}
+              >
+                Select
+              </Button>
+              <Button
+                color="red"
+                variant="outline"
+                ml="2em"
+                onClick={() => {
+                  DeleteDocument(doc.id);
+                }}
+              >
+                Delete
+              </Button>
+            </Accordion.Panel>
           </Accordion.Item>
         ))}
       </Accordion>

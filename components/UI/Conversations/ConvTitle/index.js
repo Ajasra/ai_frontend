@@ -18,7 +18,7 @@ import {
 
 export default function ConversationTitle(props) {
   const userDetails = useContext(UserContext);
-  const setUserDetails = useContext(UserDispatchContext);
+  // const setUserDetails = useContext(UserDispatchContext);
 
   const { conversation, document, updateConversation } = props;
 
@@ -28,10 +28,10 @@ export default function ConversationTitle(props) {
   async function updateTitle() {
     const json = await conversationUpdateTitleAPI(conversation.id, newTitle);
     if (json["code"] == "200") {
-      setUserDetails({
-        ...userDetails,
-        action: "updateConversations",
-      });
+      // setUserDetails({
+      //   ...userDetails,
+      //   action: "updateConversations",
+      // });
       ShowSuccess("Conversation title updated");
       updateConversation(conversation.id);
     } else {
@@ -44,12 +44,12 @@ export default function ConversationTitle(props) {
     if (json["code"] == "200") {
       if (json["response"] == true) {
         updateConversation(conversation.id);
-        setUserDetails({
-          ...userDetails,
-          conversation: null,
-          document: null,
-          action: "updateConversations",
-        });
+        // setUserDetails({
+        //   ...userDetails,
+        //   conversation: null,
+        //   document: null,
+        //   action: "updateConversations",
+        // });
       }
 
       ShowSuccess("Conversation deleted");
@@ -59,15 +59,15 @@ export default function ConversationTitle(props) {
   }
 
   function closeConversation() {
-    setUserDetails({
-      ...userDetails,
-      conversation: null,
-      document: null,
-      action: "closeConversation",
-      page: {
-        type: null,
-      },
-    });
+    // setUserDetails({
+    //   ...userDetails,
+    //   conversation: null,
+    //   document: null,
+    //   action: "closeConversation",
+    //   page: {
+    //     type: null,
+    //   },
+    // });
   }
 
   useEffect(() => {
